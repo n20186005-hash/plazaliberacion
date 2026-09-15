@@ -1,0 +1,61 @@
+---
+import { ATTRACTION } from '../lib/seo';
+
+const navItems = [
+  { href: '#clima', label: 'Clima' },
+  { href: '#sobre', label: 'Sobre la plaza' },
+  { href: '#opiniones', label: 'Opiniones' },
+  { href: '#ubicacion', label: 'Ubicación' },
+  { href: '#alrededores', label: 'Alrededores' },
+  { href: '#historia', label: 'Historia' },
+  { href: '#estrategia', label: 'Cuándo ir' },
+  { href: '#rutas', label: 'Rutas' },
+  { href: '#audiencias', label: 'Por perfil' },
+  { href: '#servicios', label: 'Servicios' },
+  { href: '#educacion', label: 'Buenas prácticas' },
+  { href: '#preguntas', label: 'FAQ' },
+  { href: '#fuentes', label: 'Fuentes' }
+];
+---
+
+<header class="sticky top-0 z-30 backdrop-blur bg-[var(--color-bg)]/85 border-b border-[var(--color-border)]">
+  <div class="container-narrow flex items-center justify-between py-3 gap-4">
+    <a href="#top" class="flex items-center gap-2 no-underline text-[var(--color-ink)]">
+      <span aria-hidden="true" class="inline-flex w-9 h-9 rounded-lg bg-[var(--color-accent)] text-[var(--color-bg)] items-center justify-center font-serif font-bold">PL</span>
+      <span class="leading-tight">
+        <span class="block font-serif font-bold text-base sm:text-lg">Plaza Liberación</span>
+        <span class="block text-xs text-[var(--color-ink-soft)]">Guadalajara · Jalisco</span>
+      </span>
+    </a>
+    <nav aria-label="Navegación principal" class="hidden xl:block">
+      <ul class="flex items-center gap-4 text-sm font-medium">
+        {navItems.map((item) => (
+          <li>
+            <a href={item.href} class="text-[var(--color-ink)] hover:text-[var(--color-accent)] no-underline whitespace-nowrap">
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+    <a class="btn-primary text-sm shrink-0" href={ATTRACTION.mapsDirectionsUrl} target="_blank" rel="noopener noreferrer">
+      Cómo llegar
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M7 17L17 7"/><path d="M7 7h10v10"/>
+      </svg>
+    </a>
+  </div>
+
+  <!-- Mobile horizontal scroll nav -->
+  <nav aria-label="Navegación móvil" class="xl:hidden border-t border-[var(--color-border)] bg-[var(--color-bg)]">
+    <ul class="container-narrow flex items-center gap-4 py-2 overflow-x-auto text-xs font-medium scroll-smooth snap-x">
+      {navItems.map((item) => (
+        <li class="snap-start shrink-0">
+          <a href={item.href} class="text-[var(--color-ink)] hover:text-[var(--color-accent)] no-underline whitespace-nowrap">
+            {item.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</header>

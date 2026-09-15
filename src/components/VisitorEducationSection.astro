@@ -1,0 +1,86 @@
+---
+import { ATTRACTION } from '../lib/seo';
+
+const items = [
+  {
+    title: 'Cuida el patrimonio',
+    body: 'La estatua de Miguel Hidalgo, las fuentes y los monumentos circundantes forman parte del patrimonio cultural de Jalisco. No te subas a ellos ni los manipules; las pintas y los daños son sancionados.'
+  },
+  {
+    title: 'Respeta a los guías',
+    body: 'Si visitas recintos oficiales como el Palacio de Gobierno, sigue las indicaciones del personal de seguridad y de los guías acreditados. No accedas a zonas restringidas.'
+  },
+  {
+    title: 'Maneja residuos con responsabilidad',
+    body: 'Deposita envases y papeles en los contenedores públicos. Evita consumir plásticos de un solo uso; una botella reutilizable es suficiente para tu recorrido.'
+  },
+  {
+    title: 'Convive con la fauna urbana',
+    body: 'Palomas, gorriones y otras aves urbanas forman parte del ecosistema del centro. No las persigas ni las alimentes con comida procesada.'
+  },
+  {
+    title: 'Respeta a la comunidad',
+    body: 'El centro histórico es zona habitada. Cuida el ruido, especialmente en horas nocturnas, y respeta a las personas que viven y trabajan en el lugar.'
+  },
+  {
+    title: 'Prepárate antes de salir',
+    body: 'Lleva calzado cómodo, sombrero o gorra en temporada de calor, y un paraguas compacto en temporada de lluvias. Mantente hidratado y descansa con frecuencia.'
+  }
+];
+
+const myths = [
+  {
+    title: 'La plaza se llama así desde siempre',
+    body: 'No. Originalmente se llamó Plaza de Armas. El nombre cambió tras la Independencia para honrar el decreto de abolición de la esclavitud firmado por Miguel Hidalgo.'
+  },
+  {
+    title: 'La estatua ecuestre es española',
+    body: 'Falso. La escultura fue realizada por el artista francés Henri Roger a finales del siglo XIX. Es una de las piezas fundacionales de la iconografía cívica moderna en México.'
+  },
+  {
+    title: 'Bajo la plaza hay tesoros ocultos',
+    body: 'Las excavaciones realizadas durante remodelaciones han descubierto piezas prehispánicas y coloniales. No son accesibles al público, pero varias se exhiben en museos cercanos.'
+  }
+];
+---
+
+<section id="educacion" class="py-14 lg:py-20">
+  <div class="container-narrow">
+    <header class="max-w-3xl">
+      <p class="text-xs uppercase tracking-[0.18em] font-semibold text-[var(--color-accent)]">Educación al visitante</p>
+      <h2 class="mt-2">Ciencia y responsabilidad en la visita</h2>
+      <p class="mt-4 text-[var(--color-ink-soft)] text-lg">
+        Como sitio científico no comercial, promovemos una visita informada. Aquí reunimos recomendaciones de comportamiento y desmitificaciones comunes.
+      </p>
+    </header>
+
+    <div class="mt-8 grid lg:grid-cols-2 gap-6">
+      <article class="surface-card p-6">
+        <h3 class="text-xl">Buenas prácticas del visitante</h3>
+        <ul class="mt-4 space-y-4">
+          {items.map((it) => (
+            <li>
+              <p class="font-semibold">{it.title}</p>
+              <p class="text-sm text-[var(--color-ink-soft)] mt-1">{it.body}</p>
+            </li>
+          ))}
+        </ul>
+      </article>
+
+      <article class="surface-card-soft p-6">
+        <h3 class="text-xl">Mitos y aclaraciones</h3>
+        <p class="mt-2 text-sm text-[var(--color-ink-soft)]">
+          Tres confusiones frecuentes sobre {ATTRACTION.fullName} que conviene aclarar para entender mejor el sitio.
+        </p>
+        <ul class="mt-4 space-y-4">
+          {myths.map((m) => (
+            <li class="surface-card p-4">
+              <p class="font-semibold text-[var(--color-ink)]">{m.title}</p>
+              <p class="text-sm text-[var(--color-ink-soft)] mt-1">{m.body}</p>
+            </li>
+          ))}
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,63 @@
+---
+import { ATTRACTION } from '../lib/seo';
+
+const landmarks = [
+  {
+    name: ATTRACTION.nearby.landmark1.name,
+    image: ATTRACTION.nearby.landmark1.image,
+    url: ATTRACTION.nearby.landmark1.url,
+    alt: `${ATTRACTION.nearby.landmark1.name} cerca de ${ATTRACTION.shortName}`,
+    blurb: 'Teatro neoclásico inaugurado en 1866; considerado una de las cimas arquitectónicas del México decimonónico.'
+  },
+  {
+    name: ATTRACTION.nearby.landmark2.name,
+    image: ATTRACTION.nearby.landmark2.image,
+    url: ATTRACTION.nearby.landmark2.url,
+    alt: `${ATTRACTION.nearby.landmark2.name} cerca de ${ATTRACTION.shortName}`,
+    blurb: 'Sede del poder ejecutivo estatal. Sus murales de José Clemente Orozco narran la historia de México.'
+  },
+  {
+    name: 'Catedral Basílica de Guadalajara',
+    image: '/images/plaza-hero.svg',
+    url: 'https://es.wikipedia.org/wiki/Catedral_de_Guadalajara',
+    alt: 'Catedral Basílica de Guadalajara cerca de Plaza Liberación',
+    blurb: 'Imponente catedral con torres gemelas y un altar de estilo neogótico, epicentro de la vida católica tapatía.'
+  }
+];
+---
+
+<section id="alrededores" class="py-14 lg:py-20 bg-[var(--color-surface-alt)] border-y border-[var(--color-border)]">
+  <div class="container-narrow">
+    <header class="max-w-3xl">
+      <h2>Landmarks &amp; Attractions Around {ATTRACTION.shortName}</h2>
+      <p class="mt-4 text-[var(--color-ink-soft)] text-lg">
+        Al visitar <strong>{ATTRACTION.fullName}</strong>, los viajeros pueden explorar con facilidad monumentos históricos y puntos de interés cercanos, incluyendo <strong>{ATTRACTION.nearby.landmark1.name}</strong> y <strong>{ATTRACTION.nearby.landmark2.name}</strong>, así como otros imprescindibles del centro histórico.
+      </p>
+    </header>
+
+    <div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {landmarks.map((landmark) => (
+        <article class="surface-card overflow-hidden flex flex-col">
+          <a href={landmark.url} target="_blank" rel="noopener noreferrer" class="block">
+            <img
+              src={landmark.image}
+              alt={landmark.alt}
+              width="1200"
+              height="800"
+              loading="lazy"
+              decoding="async"
+              class="w-full h-auto object-cover aspect-[3/2]"
+            />
+          </a>
+          <div class="p-5 flex-1 flex flex-col">
+            <h3 class="text-lg">{landmark.name}</h3>
+            <p class="mt-2 text-sm text-[var(--color-ink-soft)] flex-1">{landmark.blurb}</p>
+            <a href={landmark.url} target="_blank" rel="noopener noreferrer" class="mt-3 text-sm font-semibold text-[var(--color-accent)]">
+              Conocer más →
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

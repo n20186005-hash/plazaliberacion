@@ -1,0 +1,129 @@
+---
+import { ATTRACTION } from '../lib/seo';
+
+// Análisis basado en la climatología de 30 años publicada por organismos
+// como NOAA y agencias meteorológicas nacionales. Las cifras que se muestran
+// son rangos orientativos y NO predicciones.
+const seasons = [
+  {
+    id: 'primavera',
+    name: 'Primavera (mar–may)',
+    color: 'bg-rose-100 text-rose-900 border-rose-200',
+    badge: 'Temporada alta de visitantes',
+    avg: {
+      maxC: '27–30 °C',
+      minC: '11–14 °C',
+      rain: 'Lluvias aisladas (mayo inicia temporada húmeda)',
+      wildlife: 'Aves migratorias y flores de jacaranda en la ciudad'
+    },
+    advice: [
+      'Reserva transporte y entradas con antelación en Semana Santa.',
+      'Lleva ropa en capas: las mañanas son frescas y el mediodía caluroso.',
+      'Aprovecha las primeras horas de la mañana para recorrer la plaza con poca gente.'
+    ]
+  },
+  {
+    id: 'verano',
+    name: 'Verano (jun–ago)',
+    color: 'bg-amber-100 text-amber-900 border-amber-200',
+    badge: 'Temporada de lluvias',
+    avg: {
+      maxC: '27–30 °C',
+      minC: '15–17 °C',
+      rain: 'Lluvias intensas por las tardes (tormenta eléctrica frecuente)',
+      wildlife: 'Vegetación en plenitud; observación de aves urbanas'
+    },
+    advice: [
+      'Programa tus actividades antes de las 16:00; las tormentas suelen iniciar al final de la tarde.',
+      'Lleva paraguas compacto, impermeable y calzado con buen agarre.',
+      'Hidrátate constantemente y prioriza zonas con sombra techada.'
+    ]
+  },
+  {
+    id: 'otono',
+    name: 'Otoño (sep–nov)',
+    color: 'bg-orange-100 text-orange-900 border-orange-200',
+    badge: 'Clima más estable',
+    avg: {
+      maxC: '24–28 °C',
+      minC: '13–16 °C',
+      rain: 'Lluvia disminuye gradualmente',
+      wildlife: 'Buena visibilidad para fotografía; luz dorada'
+    },
+    advice: [
+      'Considerada la mejor temporada por el equilibrio entre temperatura y lluvia.',
+      'Ideal para fotografía: atardeceres claros y cielos limpios.',
+      'Visita entre semana para evitar concentraciones de fin de semana.'
+    ]
+  },
+  {
+    id: 'invierno',
+    name: 'Invierno (dic–feb)',
+    color: 'bg-sky-100 text-sky-900 border-sky-200',
+    badge: 'Temporada seca',
+    avg: {
+      maxC: '22–26 °C',
+      minC: '7–11 °C',
+      rain: 'Estación seca; lloviznas ocasionales',
+      wildlife: 'Aves residentes; cielos despejados'
+    },
+    advice: [
+      'Las noches y madrugadas son frescas: lleva suéter o chamarra ligera.',
+      'Es temporada alta de turismo interno en fechas festivas.',
+      'Excelente para recorridos a pie prolongados sin riesgo de lluvia.'
+    ]
+  }
+];
+---
+
+<section id="estrategia" class="py-14 lg:py-20">
+  <div class="container-narrow">
+    <header class="max-w-3xl">
+      <p class="text-xs uppercase tracking-[0.18em] font-semibold text-[var(--color-accent)]">Cuándo visitar</p>
+      <h2 class="mt-2">Estrategia estacional de visita</h2>
+      <p class="mt-4 text-[var(--color-ink-soft)] text-lg">
+        Análisis meteorológico, de calidad del aire y de fauna derivado de promedios climatológicos de 30 años publicados por organismos como la NOAA y la FWC. Las cifras son orientativas; las condiciones reales del día se confirman en el módulo de clima en vivo.
+      </p>
+    </header>
+
+    <div class="mt-8 grid sm:grid-cols-2 gap-5">
+      {seasons.map((s) => (
+        <article class={`surface-card p-6 border ${s.color}`}>
+          <div class="flex items-start justify-between gap-3">
+            <h3 class="text-xl">{s.name}</h3>
+            <span class="text-[10px] font-semibold uppercase tracking-wider px-2 py-1 rounded-full bg-white/70 border border-current/30">
+              {s.badge}
+            </span>
+          </div>
+
+          <dl class="mt-4 grid grid-cols-2 gap-y-3 gap-x-4 text-sm">
+            <div>
+              <dt class="text-[var(--color-ink-soft)] text-xs">Máx. promedio</dt>
+              <dd class="font-medium">{s.avg.maxC}</dd>
+            </div>
+            <div>
+              <dt class="text-[var(--color-ink-soft)] text-xs">Mín. promedio</dt>
+              <dd class="font-medium">{s.avg.minC}</dd>
+            </div>
+            <div class="col-span-2">
+              <dt class="text-[var(--color-ink-soft)] text-xs">Lluvia</dt>
+              <dd class="font-medium">{s.avg.rain}</dd>
+            </div>
+            <div class="col-span-2">
+              <dt class="text-[var(--color-ink-soft)] text-xs">Fauna / flora</dt>
+              <dd class="font-medium">{s.avg.wildlife}</dd>
+            </div>
+          </dl>
+
+          <ul class="mt-4 space-y-1 text-sm text-[var(--color-ink-soft)] list-disc pl-5">
+            {s.advice.map((a) => <li>{a}</li>)}
+          </ul>
+        </article>
+      ))}
+    </div>
+
+    <p class="mt-6 text-xs text-[var(--color-ink-soft)]">
+      Tabla generada a partir de climatologías (normales climatológicas) publicadas por la NOAA y la FWC. Los promedios históricos sirven únicamente como guía; consulta el módulo de clima arriba para las condiciones reales.
+    </p>
+  </div>
+</section>

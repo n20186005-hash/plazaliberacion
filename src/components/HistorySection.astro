@@ -1,0 +1,128 @@
+---
+import { ATTRACTION } from '../lib/seo';
+
+const timeline = [
+  {
+    year: '1542',
+    title: 'Fundación de Guadalajara',
+    body: 'La ciudad se funda oficialmente en el valle de Atemajac. La plaza nace como espacio principal de la traza, conocida entonces como Plaza de Armas.'
+  },
+  {
+    year: '1810',
+    title: 'Decreto de abolición de la esclavitud',
+    body: 'Miguel Hidalgo promulga en Guadalajara uno de los primeros decretos que prohíbe la esclavitud en México. Años más tarde la plaza se renombra en su honor.'
+  },
+  {
+    year: '1866',
+    title: 'Inauguración del Teatro Degollado',
+    body: 'El teatro colindante con la plaza abre sus puertas como referente cultural neoclásico. Su fachada enmarca el costado poniente de la plaza.'
+  },
+  {
+    year: '1886',
+    title: 'Estatua ecuestre de Miguel Hidalgo',
+    body: 'El presidente Porfirio Díaz develó la estatua ecuestre del prócer, obra del escultor francés Henri Roger. Se instaló en el centro mismo del espacio público.'
+  },
+  {
+    year: 'Siglo XX',
+    title: 'Renovaciones urbanas',
+    body: 'La plaza se renueva en varias etapas: se reorganizan las fuentes, se moderniza el mobiliario urbano y se restaura la estatua.'
+  },
+  {
+    year: 'Actualidad',
+    title: 'Centro cultural y cívico',
+    body: 'Hoy es escenario de conciertos, exposiciones, conmemoraciones cívicas y punto de encuentro entre la vida tradicional tapatía y el turismo internacional.'
+  }
+];
+
+const stories = [
+  {
+    title: 'La campana de Dolores que no llegó a Guadalajara',
+    body: 'Cuenta la tradición que Hidalgo planeaba hacer sonar la campana de la iglesia cercana para convocar al pueblo, pero la operación se anticipó y la campana nunca se trasladó. Lo que quedó en la memoria es la imagen del prócer presidiendo la plaza que luego llevaría su nombre.'
+  },
+  {
+    title: 'El equino y el simbolismo francés',
+    body: 'La estatua ecuestre fue encargada al escultor francés Henri Roger. Su elección refleja la influencia europea de finales del XIX, pero el mensaje es local: un héroe nacional cabalgando hacia la plaza que lleva su nombre.'
+  },
+  {
+    title: 'Los mosaicos del subsuelo',
+    body: 'Durante los trabajos de restauración se hallaron piezas cerámicas coloniales y fragmentos prehispánicos. La plaza es, en sí misma, un archivo arqueológico debajo del pavimento.'
+  }
+];
+---
+
+<section id="historia" class="py-14 lg:py-20">
+  <div class="container-narrow">
+    <header class="max-w-3xl">
+      <p class="text-xs uppercase tracking-[0.18em] font-semibold text-[var(--color-accent)]">Historia y significado</p>
+      <h2 class="mt-2">Historia &amp; Significance of {ATTRACTION.fullName}</h2>
+      <p class="mt-4 text-[var(--color-ink-soft)] text-lg">
+        Un recorrido por los hechos documentados y las historias que han tejido el carácter simbólico de la plaza. Esta sección distingue claramente lo verificable de las tradiciones orales.
+      </p>
+    </header>
+
+    <div class="mt-8 grid lg:grid-cols-2 gap-6">
+      <article class="surface-card p-6">
+        <h3 class="text-xl">Origen y consolidación</h3>
+        <p class="mt-3 text-[var(--color-ink-soft)]">
+          La plaza se denominó originalmente <em>Plaza de Armas</em>. Tras la Independencia de México se renombró en honor al decreto de abolición de la esclavitud firmado por Miguel Hidalgo en 1810 — uno de los primeros actos del movimiento insurgente.
+        </p>
+        <p class="mt-3 text-[var(--color-ink-soft)]">
+          En 1886 el presidente Porfirio Díaz develó la estatua ecuestre de Miguel Hidalgo que hoy preside el centro del espacio público, obra del escultor francés Henri Roger.
+        </p>
+      </article>
+
+      <article class="surface-card p-6">
+        <h3 class="text-xl">Arquitectura y simbolismo</h3>
+        <p class="mt-3 text-[var(--color-ink-soft)]">
+          La plaza está enmarcada por tres edificios icónicos de {ATTRACTION.city}: el <strong>{ATTRACTION.nearby.landmark2.name}</strong> al oriente, el <strong>{ATTRACTION.nearby.landmark1.name}</strong> al poniente y la Catedral al norte, formando un conjunto declarado Patrimonio Cultural del Estado.
+        </p>
+        <p class="mt-3 text-[var(--color-ink-soft)]">
+          Bajo el suelo se conservan piezas prehispánicas encontradas durante remodelaciones, mientras que sus fuentes y luminarias han sido testigo de celebraciones cívicas, conciertos y protestas a lo largo de más de un siglo.
+        </p>
+      </article>
+    </div>
+
+    <figure class="surface-card overflow-hidden mt-6">
+      <img
+        src="/images/plaza-hidalgo.svg"
+        alt={`Estatua de Miguel Hidalgo en ${ATTRACTION.fullName}, ${ATTRACTION.city}`}
+        width="1200"
+        height="800"
+        loading="lazy"
+        decoding="async"
+        class="w-full h-auto object-cover aspect-[3/2]"
+      />
+      <figcaption class="px-4 py-3 text-xs text-[var(--color-ink-soft)] border-t border-[var(--color-border)]">
+        Estatua de Miguel Hidalgo, ícono central de la plaza. 本网站所展示的所有图片产权及版权均归原摄影者所有.
+      </figcaption>
+    </figure>
+
+    <div class="mt-12">
+      <h3 class="text-2xl">Línea de tiempo documentada</h3>
+      <ol class="mt-5 border-l-2 border-[var(--color-accent)] pl-5 space-y-5">
+        {timeline.map((t) => (
+          <li>
+            <p class="text-xs font-mono text-[var(--color-accent)]">{t.year}</p>
+            <p class="font-semibold">{t.title}</p>
+            <p class="text-sm text-[var(--color-ink-soft)]">{t.body}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+
+    <div class="mt-12 surface-card p-6">
+      <h3 class="text-2xl">Historias y tradiciones orales</h3>
+      <p class="mt-2 text-sm text-[var(--color-ink-soft)]">
+        Estos relatos forman parte del imaginario popular. Se presentan aquí sin afirmar veracidad histórica; sirven para entender la memoria colectiva que rodea a la plaza.
+      </p>
+      <ul class="mt-4 space-y-4">
+        {stories.map((s) => (
+          <li>
+            <p class="font-semibold">{s.title}</p>
+            <p class="text-sm text-[var(--color-ink-soft)] mt-1">{s.body}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>

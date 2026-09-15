@@ -1,0 +1,109 @@
+---
+import { ATTRACTION } from '../lib/seo';
+
+const halfDay = {
+  title: 'Medio día (≈ 4 h)',
+  description: 'Recorrido compacto para una primera visita al centro histórico.',
+  blocks: [
+    {
+      time: '09:00 – 10:00',
+      title: 'Plaza de la Liberación',
+      desc: 'Punto de partida. Observa la estatua de Miguel Hidalgo, las fuentes y la orientación del conjunto arquitectónico.'
+    },
+    {
+      time: '10:00 – 11:00',
+      title: 'Teatro Degollado (fachada y vestíbulo)',
+      desc: 'Fachada neoclásica; en funciones programadas es posible acceder al vestíbulo con horario acotado.'
+    },
+    {
+      time: '11:00 – 12:00',
+      title: 'Palacio de Gobierno',
+      desc: 'Patio central y murales de José Clemente Orozco (visita sujeta a horario y protocolo de seguridad).'
+    },
+    {
+      time: '12:00 – 13:00',
+      title: 'Catedral Basílica de Guadalajara',
+      desc: 'Recorrido breve por el atrio y, si está abierto, el interior.'
+    }
+  ]
+};
+
+const fullDay = {
+  title: 'Día completo (≈ 8 h)',
+  description: 'Recorrido ampliado con pausas gastronómicas y museos opcionales.',
+  blocks: [
+    {
+      time: '09:00 – 10:30',
+      title: 'Plaza de la Liberación y fuentes',
+      desc: 'Toma de fotografías y revisión del conjunto monumental. Café cercano antes de continuar.'
+    },
+    {
+      time: '10:30 – 12:00',
+      title: 'Teatro Degollado',
+      desc: 'Visita guiada del vestíbulo y, según calendario, asistencia a ensayo abierto.'
+    },
+    {
+      time: '12:00 – 13:30',
+      title: 'Palacio de Gobierno + murales de Orozco',
+      desc: 'Recorrido de los patios y los murales. Identifica las escenas históricas representadas.'
+    },
+    {
+      time: '13:30 – 15:00',
+      title: 'Comida y descanso',
+      desc: 'Pausa en zona de restaurantes a pie del recorrido (no se recomiendan marcas específicas).'
+    },
+    {
+      time: '15:00 – 17:00',
+      title: 'Catedral + Plaza de Armas + Paseo Alcalde',
+      desc: 'Recorrido a pie de la zona centro hasta el Paseo Alcalde, con retorno.'
+    },
+    {
+      time: '17:00 – 18:30',
+      title: 'Atardecer en Plaza Liberación',
+      desc: 'Mejor luz para fotografía. Eventos culturales pueden variar según el día.'
+    }
+  ]
+};
+---
+
+<section id="rutas" class="py-14 lg:py-20 bg-[var(--color-surface-alt)] border-y border-[var(--color-border)]">
+  <div class="container-narrow">
+    <header class="max-w-3xl">
+      <p class="text-xs uppercase tracking-[0.18em] font-semibold text-[var(--color-accent)]">Itinerarios sugeridos</p>
+      <h2 class="mt-2">Rutas generales de visita</h2>
+      <p class="mt-4 text-[var(--color-ink-soft)] text-lg">
+        Dos rutas base —media jornada y día completo— que pueden ajustarse según tu ritmo, intereses y presupuesto. Todas se realizan a pie; las distancias entre puntos son cortas y hay señalización accesible.
+      </p>
+    </header>
+
+    <div class="mt-8 grid lg:grid-cols-2 gap-6">
+      <article class="surface-card p-6">
+        <h3 class="text-xl">{halfDay.title}</h3>
+        <p class="mt-1 text-sm text-[var(--color-ink-soft)]">{halfDay.description}</p>
+        <ol class="mt-5 space-y-4 border-l-2 border-[var(--color-accent)] pl-4">
+          {halfDay.blocks.map((b) => (
+            <li>
+              <p class="text-xs font-mono text-[var(--color-accent)]">{b.time}</p>
+              <p class="font-semibold">{b.title}</p>
+              <p class="text-sm text-[var(--color-ink-soft)]">{b.desc}</p>
+            </li>
+          ))}
+        </ol>
+      </article>
+
+      <article class="surface-card p-6">
+        <h3 class="text-xl">{fullDay.title}</h3>
+        <p class="mt-1 text-sm text-[var(--color-ink-soft)]">{fullDay.description}</p>
+        <ol class="mt-5 space-y-4 border-l-2 border-[var(--color-accent)] pl-4">
+          {fullDay.blocks.map((b) => (
+            <li>
+              <p class="text-xs font-mono text-[var(--color-accent)]">{b.time}</p>
+              <p class="font-semibold">{b.title}</p>
+              <p class="text-sm text-[var(--color-ink-soft)]">{b.desc}</p>
+            </li>
+          ))}
+        </ol>
+      </article>
+    </div>
+  </div>
+</section>

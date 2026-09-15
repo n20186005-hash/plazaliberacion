@@ -1,0 +1,30 @@
+---
+import { FAQS } from '../lib/seo';
+---
+
+<section id="preguntas" class="py-14 lg:py-20 bg-[var(--color-surface-alt)] border-y border-[var(--color-border)]">
+  <div class="container-narrow">
+    <header class="max-w-3xl">
+      <h2>Preguntas frecuentes</h2>
+      <p class="mt-4 text-[var(--color-ink-soft)] text-lg">
+        Respuestas rápidas a las consultas más comunes de quienes planean visitar Plaza de la Liberación.
+      </p>
+    </header>
+
+    <div class="mt-8 surface-card p-2 sm:p-4">
+      {FAQS.map((faq, index) => (
+        <details class="group border-b border-[var(--color-border)] last:border-b-0" open={index === 0}>
+          <summary class="flex items-start justify-between gap-4 cursor-pointer py-4 px-3 list-none">
+            <h3 class="text-base sm:text-lg font-semibold text-[var(--color-ink)] m-0">{faq.name}</h3>
+            <span aria-hidden="true" class="shrink-0 w-7 h-7 rounded-full border border-[var(--color-border)] flex items-center justify-center text-[var(--color-accent)] transition-transform group-open:rotate-45">
+              +
+            </span>
+          </summary>
+          <div class="px-3 pb-5 text-sm text-[var(--color-ink-soft)]">
+            {faq.acceptedAnswer}
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>

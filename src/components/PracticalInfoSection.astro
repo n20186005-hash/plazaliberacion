@@ -1,0 +1,128 @@
+---
+import { ATTRACTION } from '../lib/seo';
+
+// Información de servicios descrita a nivel de TIPO. No se recomiendan
+// marcas ni nombres comerciales específicos para mantener neutralidad.
+
+const services = [
+  {
+    id: 'wc',
+    title: 'Baños públicos (WC)',
+    icon: 'WC',
+    summary: 'Existen módulos de sanitarios públicos en el centro histórico, en su mayoría de pago. Identifica los más cercanos antes de iniciar el recorrido.',
+    details: [
+      'Lleva monedas o tarjeta para los módulos automatizados.',
+      'En Palacio de Gobierno y otros edificios oficiales el acceso está sujeto a protocolo.',
+      'Los museos y centros culturales cercanos ofrecen sanitarios gratuitos a sus visitantes.'
+    ]
+  },
+  {
+    id: 'estacionamiento',
+    title: 'Estacionamiento',
+    icon: 'P',
+    summary: 'La zona centro dispone de estacionamientos públicos subterráneos y a cielo abierto. Es un área regulada con parquímetros en superficie.',
+    details: [
+      'Estacionamientos subterráneos en Plaza de Armas y calles aledañas.',
+      'Estacionamiento prolongado: consulta tarifa por día en cada lote.',
+      'En horas pico el tráfico es denso; considera transporte público o llegar a pie.'
+    ]
+  },
+  {
+    id: 'alimentacion',
+    title: 'Alimentación',
+    icon: '🍽',
+    summary: 'Hay oferta diversa de restaurantes, cafeterías y fondas alrededor de la plaza. La elección depende del presupuesto y del horario.',
+    details: [
+      'Menú del día en fondas y cocinas económicas: opción accesible para una comida corrida.',
+      'Cafeterías: ideales para un descanso a media mañana o merienda.',
+      'Cocina regional: prueba platillos típicos en establecimientos con buena rotación de comensales.'
+    ]
+  },
+  {
+    id: 'hospedaje',
+    title: 'Hospedaje',
+    icon: '🛏',
+    summary: 'La oferta de hospedaje en el centro histórico incluye categorías que van desde hoteles boutique hasta hostales económicos.',
+    details: [
+      'Reserva con antelación en temporada alta (Semana Santa, vacaciones de verano e invierno).',
+      'Verifica la distancia a pie desde el hospedaje hasta Plaza Liberación.',
+      'Considera opciones con cancelación gratuita para imprevistos.'
+    ]
+  },
+  {
+    id: 'supermercado',
+    title: 'Supermercados y tiendas de conveniencia',
+    icon: '🛒',
+    summary: 'Hay tiendas de conveniencia y supermercados a pocas calles. Útiles para adquirir agua embotellada, snacks o artículos de uso personal.',
+    details: [
+      'Tiendas 24 h en calles principales: abiertas temprano y tarde.',
+      'Supermercados medianos y grandes dentro de un radio de 1 – 2 km.',
+      'También hay mercados municipales con productos frescos locales.'
+    ]
+  },
+  {
+    id: 'carga',
+    title: 'Estaciones de carga para vehículo eléctrico',
+    icon: '⚡',
+    summary: 'La red de carga pública para vehículos eléctricos continúa expandiéndose; consulta un mapa en tiempo real antes de viajar.',
+    details: [
+      'Conectores más comunes en la región: CCS2 y Tipo 1.',
+      'Algunas estaciones son gratuitas en estacionamientos públicos; otras requieren app o membresía.',
+      'Verifica disponibilidad antes del viaje: la demanda puede superar la oferta en horas pico.'
+    ]
+  },
+  {
+    id: 'gasolinera',
+    title: 'Gasolineras',
+    icon: '⛽',
+    summary: 'Hay varias gasolineras en el anillo vial cercano al centro. Los precios pueden variar entre estaciones; conviene comparar antes de cargar.',
+    details: [
+      'Identifica estaciones con calificaciones recientes de otros usuarios.',
+      'Ten en cuenta los horarios de servicio: algunas operan 24 h, otras tienen horario limitado.',
+      'Verifica el tipo de combustible compatible con tu vehículo.'
+    ]
+  },
+  {
+    id: 'primeros-auxilios',
+    title: 'Primeros auxilios',
+    icon: '🚑',
+    summary: 'Servicios médicos y farmacias se localizan en el centro y zonas aledañas.',
+    details: [
+      'Marcación de emergencias: 911 en México.',
+      'Hospitales públicos y privados a pocos minutos del centro.',
+      'Farmacias de turno 24 h disponibles en la zona.'
+    ]
+  }
+];
+---
+
+<section id="servicios" class="py-14 lg:py-20 bg-[var(--color-surface-alt)] border-y border-[var(--color-border)]">
+  <div class="container-narrow">
+    <header class="max-w-3xl">
+      <p class="text-xs uppercase tracking-[0.18em] font-semibold text-[var(--color-accent)]">Información práctica</p>
+      <h2 class="mt-2">Servicios y equipamientos cercanos</h2>
+      <p class="mt-4 text-[var(--color-ink-soft)] text-lg">
+        Descripción general por categoría. Este sitio no recomienda marcas, cadenas ni proveedores específicos; cada visitante debe contrastar la información con mapas y aplicaciones oficiales actualizadas.
+      </p>
+    </header>
+
+    <div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      {services.map((s) => (
+        <article class="surface-card p-5 flex flex-col">
+          <div class="flex items-center gap-3">
+            <span aria-hidden="true" class="inline-flex w-10 h-10 rounded-lg bg-[var(--color-accent)] text-[var(--color-bg)] items-center justify-center font-bold">{s.icon}</span>
+            <h3 class="text-base font-semibold leading-tight">{s.title}</h3>
+          </div>
+          <p class="mt-3 text-sm text-[var(--color-ink-soft)]">{s.summary}</p>
+          <ul class="mt-3 space-y-1 text-xs text-[var(--color-ink-soft)] list-disc pl-4 flex-1">
+            {s.details.map((d) => <li>{d}</li>)}
+          </ul>
+        </article>
+      ))}
+    </div>
+
+    <p class="mt-8 text-xs text-[var(--color-ink-soft)]">
+      Las descripciones anteriores son orientativas. Antes de tu visita confirma disponibilidad y horarios con aplicaciones oficiales (Google Maps, OpenStreetMap, sitios gubernamentales).
+    </p>
+  </div>
+</section>

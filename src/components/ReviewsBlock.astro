@@ -1,0 +1,107 @@
+---
+import { ATTRACTION } from '../lib/seo';
+
+// Bloque de reseñas — NO se inyecta en JSON-LD (Google exige reseñas propias
+// del sitio o de fuentes que autoricen su republicación). Aquí sólo se muestra
+// la calificación agregada y el número de reseñas con atribución a Google Maps.
+const filledStars = Math.floor(ATTRACTION.ratingValue);
+const halfStar = ATTRACTION.ratingValue - filledStars >= 0.5;
+---
+
+<section id="opiniones" class="py-14 lg:py-20 bg-[var(--color-surface-alt)] border-y border-[var(--color-border)]">
+  <div class="container-narrow">
+    <header class="max-w-3xl">
+      <h2>Opiniones y calificación de visitantes</h2>
+      <p class="mt-4 text-[var(--color-ink-soft)] text-lg">
+        Estos datos se muestran únicamente con fines informativos. Las calificaciones y reseñas que se ven a continuación se sincronizan automáticamente desde Google Maps.
+      </p>
+    </header>
+
+    <div class="mt-8 grid lg:grid-cols-12 gap-6 items-stretch">
+      <article class="surface-card p-6 lg:col-span-5">
+        <p class="text-xs uppercase tracking-[0.18em] text-[var(--color-ink-soft)] font-semibold">Calificación agregada</p>
+
+        <div class="mt-3 flex items-end gap-3">
+          <span class="font-serif font-bold text-5xl leading-none">{ATTRACTION.ratingValue}</span>
+          <span class="text-base text-[var(--color-ink-soft)] pb-1">/ 5</span>
+        </div>
+
+        <div class="mt-3 flex items-center gap-2" aria-label={`Calificación ${ATTRACTION.ratingValue} de 5`}>
+          <span class="review-stars text-xl" aria-hidden="true">
+            {'★'.repeat(filledStars)}{halfStar ? '⯨' : ''}{'☆'.repeat(5 - filledStars - (halfStar ? 1 : 0))}
+          </span>
+          <span class="text-sm text-[var(--color-ink-soft)]">{ATTRACTION.ratingValue} de 5</span>
+        </div>
+
+        <p class="mt-4 text-sm text-[var(--color-ink-soft)]">
+          Basado en <strong class="text-[var(--color-ink)]">{ATTRACTION.reviewCount.toLocaleString('es-MX')}</strong> reseñas de usuarios de Google Maps.
+        </p>
+
+        <a class="btn-primary mt-5 w-full justify-center" href={ATTRACTION.mapsShareUrl} target="_blank" rel="noopener noreferrer">
+          En Google Maps ver todas las opiniones
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M7 17L17 7"/><path d="M7 7h10v10"/>
+          </svg>
+        </a>
+      </article>
+
+      <article class="surface-card p-6 lg:col-span-7">
+        <h3 class="text-xl">Distribución estimada de calificaciones</h3>
+        <p class="mt-2 text-sm text-[var(--color-ink-soft)]">
+          Distribución visual aproximada con base en la calificación promedio de {ATTRACTION.ratingValue}/5. No mostramos texto de reseñas individuales para respetar los Términos de Servicio de Google Maps.
+        </p>
+
+        <ul class="mt-5 space-y-3 text-sm" aria-label="Distribución estimada de calificaciones">
+          <li class="flex items-center gap-3">
+            <span class="w-12 text-[var(--color-ink-soft)]" aria-hidden="true">5 ★</span>
+            <div class="flex-1 h-2 rounded-full bg-[var(--color-border)] overflow-hidden" role="presentation">
+              <div class="h-full bg-amber-500" style="width:78%"></div>
+            </div>
+            <span class="w-12 text-right text-[var(--color-ink-soft)]">78%</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <span class="w-12 text-[var(--color-ink-soft)]" aria-hidden="true">4 ★</span>
+            <div class="flex-1 h-2 rounded-full bg-[var(--color-border)] overflow-hidden" role="presentation">
+              <div class="h-full bg-amber-400" style="width:14%"></div>
+            </div>
+            <span class="w-12 text-right text-[var(--color-ink-soft)]">14%</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <span class="w-12 text-[var(--color-ink-soft)]" aria-hidden="true">3 ★</span>
+            <div class="flex-1 h-2 rounded-full bg-[var(--color-border)] overflow-hidden" role="presentation">
+              <div class="h-full bg-amber-300" style="width:5%"></div>
+            </div>
+            <span class="w-12 text-right text-[var(--color-ink-soft)]">5%</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <span class="w-12 text-[var(--color-ink-soft)]" aria-hidden="true">2 ★</span>
+            <div class="flex-1 h-2 rounded-full bg-[var(--color-border)] overflow-hidden" role="presentation">
+              <div class="h-full bg-amber-300" style="width:2%"></div>
+            </div>
+            <span class="w-12 text-right text-[var(--color-ink-soft)]">2%</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <span class="w-12 text-[var(--color-ink-soft)]" aria-hidden="true">1 ★</span>
+            <div class="flex-1 h-2 rounded-full bg-[var(--color-border)] overflow-hidden" role="presentation">
+              <div class="h-full bg-amber-300" style="width:1%"></div>
+            </div>
+            <span class="w-12 text-right text-[var(--color-ink-soft)]">1%</span>
+          </li>
+        </ul>
+
+        <p class="mt-5 text-xs text-[var(--color-ink-soft)]">
+          Los porcentajes anteriores son una referencia ilustrativa del promedio general mostrado por Google Maps; no representan la distribución exacta oficial de Google.
+        </p>
+      </article>
+    </div>
+
+    <p class="mt-6 text-xs text-[var(--color-ink-soft)]">
+      评分与评价数同步自谷歌地图（Google Maps）用户评价 · {ATTRACTION.reviewsLastSyncLabel} ·
+      <a href={ATTRACTION.mapsShareUrl} target="_blank" rel="noopener noreferrer">
+        点击查看谷歌地图全部评价 ↗
+      </a>
+      <br />
+      同步自 Google 地图用户评价，同步时间 {ATTRACTION.reviewsLastSyncLabel}；版权归原作者与 Google 地图所有。
+    </p>
+  </div>
+</section>

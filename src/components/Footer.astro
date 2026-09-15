@@ -1,0 +1,65 @@
+---
+import { ATTRACTION, SITE_CONFIG } from '../lib/seo';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-[var(--color-ink)] text-[var(--color-bg)] py-10">
+  <div class="container-narrow grid sm:grid-cols-2 lg:grid-cols-4 gap-8 text-sm">
+    <div>
+      <p class="font-serif font-bold text-lg">Plaza Liberación</p>
+      <p class="mt-2 text-[var(--color-border)] opacity-90">
+        Guía oficial para visitantes de {ATTRACTION.fullName} en {ATTRACTION.city}, {ATTRACTION.state}, {ATTRACTION.country}.
+      </p>
+      <p class="mt-3 text-xs opacity-70">Dominio: {SITE_CONFIG.domain}</p>
+    </div>
+
+    <nav aria-label="Enlaces del sitio">
+      <p class="font-semibold">Sitio</p>
+      <ul class="mt-2 space-y-1 opacity-90">
+        <li><a href="#sobre" class="text-[var(--color-bg)] no-underline hover:underline">Sobre la plaza</a></li>
+        <li><a href="#opiniones" class="text-[var(--color-bg)] no-underline hover:underline">Opiniones</a></li>
+        <li><a href="#ubicacion" class="text-[var(--color-bg)] no-underline hover:underline">Ubicación</a></li>
+        <li><a href="#preguntas" class="text-[var(--color-bg)] no-underline hover:underline">Preguntas</a></li>
+        <li><a href="#fuentes" class="text-[var(--color-bg)] no-underline hover:underline">Fuentes</a></li>
+      </ul>
+    </nav>
+
+    <nav aria-label="Enlaces oficiales">
+      <p class="font-semibold">Enlaces oficiales</p>
+      <ul class="mt-2 space-y-1 opacity-90">
+        <li>
+          <a href={ATTRACTION.mapsShareUrl} target="_blank" rel="noopener noreferrer" class="text-[var(--color-bg)] no-underline hover:underline">
+            Google Maps · Plaza Liberación ↗
+          </a>
+        </li>
+        <li>
+          <a href={ATTRACTION.mapsDirectionsUrl} target="_blank" rel="noopener noreferrer" class="text-[var(--color-bg)] no-underline hover:underline">
+            Cómo llegar en Google Maps ↗
+          </a>
+        </li>
+        <li>
+          <a href={ATTRACTION.govtTourismUrl} target="_blank" rel="noopener noreferrer" class="text-[var(--color-bg)] no-underline hover:underline">
+            {ATTRACTION.state} · Turismo oficial ↗
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <div>
+      <p class="font-semibold">Avisos</p>
+      <ul class="mt-2 space-y-1 opacity-90 text-xs leading-relaxed">
+        <li>评价仅展示汇总评分与评价数；文本 de reseñas no se reproduce para cumplir los TOS de Google Maps.</li>
+        <li>本网站所展示的所有图片产权及版权均归原摄影者所有.</li>
+        <li>本页面无 cookie 跟踪、无 analítica invasiva.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="container-narrow mt-10 pt-6 border-t border-white/10 flex flex-wrap items-center justify-between gap-4 text-xs opacity-75">
+    <p>© {year} {SITE_CONFIG.name}. Hecho con Astro · Cloudflare.</p>
+    <p>
+      v1.0.0 · Última sincronización de reseñas: {ATTRACTION.reviewsLastSyncLabel}
+    </p>
+  </div>
+</footer>

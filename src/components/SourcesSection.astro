@@ -1,0 +1,114 @@
+---
+import { ATTRACTION, SYNC_SOURCES } from '../lib/seo';
+---
+
+<section id="fuentes" class="py-14 lg:py-20">
+  <div class="container-narrow">
+    <header class="max-w-3xl">
+      <h2>Fuentes y atribución</h2>
+      <p class="mt-4 text-[var(--color-ink-soft)] text-lg">
+        La información publicada en este sitio proviene de fuentes públicas verificables. A continuación declaramos el origen de los datos para garantizar la trazabilidad y el cumplimiento de los Términos de Servicio de Google Maps.
+      </p>
+    </header>
+
+    <div class="mt-8 surface-card p-6">
+      <h3 class="text-lg">Tabla de fuentes</h3>
+      <div class="mt-4 overflow-x-auto">
+        <table class="w-full text-sm border-collapse">
+          <thead>
+            <tr class="border-b border-[var(--color-border)] text-left">
+              <th class="py-3 pr-4 font-semibold">Tipo de dato</th>
+              <th class="py-3 pr-4 font-semibold">Fuente</th>
+              <th class="py-3 pr-4 font-semibold">Última sincronización</th>
+            </tr>
+          </thead>
+          <tbody class="text-[var(--color-ink-soft)]">
+            <tr class="border-b border-[var(--color-border)]">
+              <td class="py-3 pr-4 font-medium text-[var(--color-ink)]">Calificación (4.7 / 5)</td>
+              <td class="py-3 pr-4">
+                <a href={ATTRACTION.mapsShareUrl} target="_blank" rel="noopener noreferrer">
+                  Google Maps — Plaza de la Liberación
+                </a>
+              </td>
+              <td class="py-3 pr-4">{ATTRACTION.reviewsLastSyncLabel}</td>
+            </tr>
+            <tr class="border-b border-[var(--color-border)]">
+              <td class="py-3 pr-4 font-medium text-[var(--color-ink)]">Número de reseñas (14,441)</td>
+              <td class="py-3 pr-4">
+                <a href={ATTRACTION.mapsShareUrl} target="_blank" rel="noopener noreferrer">
+                  Google Maps — Plaza de la Liberación
+                </a>
+              </td>
+              <td class="py-3 pr-4">{ATTRACTION.reviewsLastSyncLabel}</td>
+            </tr>
+            <tr class="border-b border-[var(--color-border)]">
+              <td class="py-3 pr-4 font-medium text-[var(--color-ink)]">Texto de reseñas</td>
+              <td class="py-3 pr-4">
+                No se muestran. Sólo se enlaza al listado oficial en Google Maps.
+              </td>
+              <td class="py-3 pr-4">—</td>
+            </tr>
+            <tr class="border-b border-[var(--color-border)]">
+              <td class="py-3 pr-4 font-medium text-[var(--color-ink)]">Fotografías</td>
+              <td class="py-3 pr-4">
+                <a href="https://commons.wikimedia.org/wiki/Category:Plaza_de_la_Liberaci%C3%B3n_(Guadalajara)" target="_blank" rel="noopener noreferrer">
+                  Wikimedia Commons
+                </a>
+              </td>
+              <td class="py-3 pr-4">2026-09</td>
+            </tr>
+            <tr class="border-b border-[var(--color-border)]">
+              <td class="py-3 pr-4 font-medium text-[var(--color-ink)]">Climatología (normales 30 años)</td>
+              <td class="py-3 pr-4">
+                <a href="https://www.noaa.gov/" target="_blank" rel="noopener noreferrer">
+                  NOAA — promedios climatológicos históricos
+                </a>
+              </td>
+              <td class="py-3 pr-4">2026-09</td>
+            </tr>
+            <tr class="border-b border-[var(--color-border)]">
+              <td class="py-3 pr-4 font-medium text-[var(--color-ink)]">Información turística oficial</td>
+              <td class="py-3 pr-4">
+                <a href={ATTRACTION.govtTourismUrl} target="_blank" rel="noopener noreferrer">
+                  {ATTRACTION.country} / {ATTRACTION.state} — Portal Oficial de Turismo
+                </a>
+              </td>
+              <td class="py-3 pr-4">2026-09</td>
+            </tr>
+            <tr>
+              <td class="py-3 pr-4 font-medium text-[var(--color-ink)]">Gobierno municipal</td>
+              <td class="py-3 pr-4">
+                <a href="https://www.guadalajara.gob.mx/" target="_blank" rel="noopener noreferrer">
+                  Ayuntamiento de Guadalajara
+                </a>
+              </td>
+              <td class="py-3 pr-4">2026-09</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="mt-6 text-sm text-[var(--color-ink-soft)]">
+        <strong>评价 · 同步时间 {ATTRACTION.reviewsLastSyncLabel}:</strong>
+        同步自 Google 地图用户评价，同步时间 {ATTRACTION.reviewsLastSyncLabel}；版权归原作者与 Google 地图所有.
+        <a href={ATTRACTION.mapsShareUrl} target="_blank" rel="noopener noreferrer" class="ml-1">
+          Ver todas las opiniones en Google Maps ↗
+        </a>
+      </p>
+
+      <p class="mt-3 text-sm text-[var(--color-ink-soft)]">
+        <strong>Imágenes:</strong> 本网站所展示的所有图片产权及版权均归原摄影者所有. Cualquier fotografía incluida en este sitio proviene de Wikimedia Commons bajo las licencias declaradas por sus autores; ver <code>IMAGE-CREDITS.md</code> para detalles.
+      </p>
+
+      <ul class="mt-6 flex flex-wrap gap-3 text-xs text-[var(--color-ink-soft)]">
+        {SYNC_SOURCES.map((s) => (
+          <li>
+            <a href={s.url} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 px-3 py-2 border border-[var(--color-border)] rounded-full no-underline text-[var(--color-ink)] bg-[var(--color-bg)] hover:border-[var(--color-accent)]">
+              {s.label} ↗
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>

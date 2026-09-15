@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "records": [
+    {
+      "spaceKey": "58f450fe0a184566926df27ab92f442a",
+      "projectPath": "h:\\GitHub\\plazaliberacion",
+      "desc": "Plaza de la Liberación build verification",
+      "createdAt": 1789476424939
+    },
+    {
+      "spaceKey": "bf15e809a5654e91b659cca742cc8227",
+      "projectPath": "h:\\GitHub\\plazaliberacion",
+      "desc": "Plaza de la Liberación build verification",
+      "createdAt": 1789476440549
+    },
+    {
+      "spaceKey": "b4c6a43ebefc46c5ad02d43057433166",
+      "projectPath": "h:\\GitHub\\plazaliberacion",
+      "desc": "Plaza de la Liberacion build verification",
+      "createdAt": 1789476572249
+    }
+  ]
+}

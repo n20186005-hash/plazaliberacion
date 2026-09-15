@@ -1,0 +1,110 @@
+---
+import { ATTRACTION } from '../lib/seo';
+---
+
+<section id="top" class="relative isolate overflow-hidden">
+  <div class="container-narrow pt-10 pb-14 lg:pt-16 lg:pb-24">
+    <div class="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+      <div class="lg:col-span-7">
+        <p class="inline-flex items-center gap-2 text-xs uppercase tracking-[0.18em] font-semibold text-[var(--color-accent)] bg-[var(--color-surface-alt)] border border-[var(--color-border)] px-3 py-1 rounded-full mb-5">
+          <span aria-hidden="true">●</span> {ATTRACTION.category}
+        </p>
+
+        <h1>
+          {ATTRACTION.fullName} ({ATTRACTION.city})
+        </h1>
+
+        <p class="mt-5 text-lg text-[var(--color-ink-soft)] max-w-2xl">
+          Bienvenido a <strong>{ATTRACTION.fullName}</strong>, conocida popularmente como
+          <strong>{ATTRACTION.shortName}</strong>. Ubicada en el corazón de
+          <strong>{ATTRACTION.city}</strong>, <strong>{ATTRACTION.state}</strong>,
+          <strong>{ATTRACTION.country}</strong>, esta plaza es el principal punto de encuentro
+          para quienes exploran el centro histórico de Guadalajara.
+        </p>
+
+        <p class="mt-4 text-base text-[var(--color-ink-soft)] max-w-2xl">
+          {ATTRACTION.fullName} &rarr; {ATTRACTION.city} &rarr; {ATTRACTION.state} &rarr; {ATTRACTION.country}
+        </p>
+
+        <div class="mt-7 flex flex-wrap gap-3">
+          <a class="btn-primary" href={ATTRACTION.mapsDirectionsUrl} target="_blank" rel="noopener noreferrer">
+            Cómo llegar en Google Maps
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M7 17L17 7"/><path d="M7 7h10v10"/>
+            </svg>
+          </a>
+          <a class="btn-secondary" href="#opiniones">
+            Ver opiniones verificadas
+          </a>
+        </div>
+
+        <dl class="mt-8 grid grid-cols-3 gap-4 max-w-xl">
+          <div class="surface-card-soft p-4">
+            <dt class="text-xs uppercase tracking-wider text-[var(--color-ink-soft)]">Calificación</dt>
+            <dd class="mt-1 font-serif font-bold text-2xl">{ATTRACTION.ratingValue}<span class="text-base text-[var(--color-ink-soft)]">/5</span></dd>
+          </div>
+          <div class="surface-card-soft p-4">
+            <dt class="text-xs uppercase tracking-wider text-[var(--color-ink-soft)]">Reseñas</dt>
+            <dd class="mt-1 font-serif font-bold text-2xl">{ATTRACTION.reviewCount.toLocaleString('es-MX')}</dd>
+          </div>
+          <div class="surface-card-soft p-4">
+            <dt class="text-xs uppercase tracking-wider text-[var(--color-ink-soft)]">Entrada</dt>
+            <dd class="mt-1 font-serif font-bold text-2xl">Libre</dd>
+          </div>
+        </dl>
+
+        <p class="mt-4 text-xs text-[var(--color-ink-soft)] max-w-xl">
+          评分与评价数同步自谷歌地图（Google Maps）用户评价 · {ATTRACTION.reviewsLastSyncLabel} ·
+          <a href={ATTRACTION.mapsShareUrl} target="_blank" rel="noopener noreferrer">
+            点击查看谷歌地图全部评价 ↗
+          </a>
+        </p>
+      </div>
+
+      <div class="lg:col-span-5">
+        <figure class="surface-card overflow-hidden">
+          <img
+            src={ATTRACTION.heroImage}
+            alt={`${ATTRACTION.fullName} - Vista principal en ${ATTRACTION.city}, ${ATTRACTION.country}`}
+            width="1200"
+            height="800"
+            loading="eager"
+            decoding="async"
+            class="w-full h-auto object-cover aspect-[3/2]"
+          />
+          <figcaption class="px-4 py-3 text-xs text-[var(--color-ink-soft)] border-t border-[var(--color-border)]">
+            {ATTRACTION.fullName}, {ATTRACTION.city}, {ATTRACTION.country}.
+            <span class="block mt-1 opacity-80">
+              本网站所展示的所有图片产权及版权均归原摄影者所有。
+            </span>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+
+  <!-- Breadcrumb -->
+  <nav aria-label="Jerarquía geográfica" class="border-t border-[var(--color-border)] bg-[var(--color-surface-alt)]">
+    <ol class="container-narrow py-3 flex flex-wrap items-center gap-2 text-xs text-[var(--color-ink-soft)]" itemscope itemtype="https://schema.org/BreadcrumbList">
+      <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="/" class="no-underline text-[var(--color-ink)]"><span itemprop="name">{ATTRACTION.fullName}</span></a>
+        <meta itemprop="position" content="1" />
+      </li>
+      <li aria-hidden="true">→</li>
+      <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <span itemprop="name">{ATTRACTION.city}</span>
+        <meta itemprop="position" content="2" />
+      </li>
+      <li aria-hidden="true">→</li>
+      <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <span itemprop="name">{ATTRACTION.state}</span>
+        <meta itemprop="position" content="3" />
+      </li>
+      <li aria-hidden="true">→</li>
+      <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <span itemprop="name">{ATTRACTION.country}</span>
+        <meta itemprop="position" content="4" />
+      </li>
+    </ol>
+  </nav>
+</section>
