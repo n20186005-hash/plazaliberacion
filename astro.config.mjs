@@ -3,13 +3,18 @@ import cloudflare from '@astrojs/cloudflare';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
-// ÚNICO lugar para configurar el dominio. Déjalo vacío hasta disponer del dominio final.
-const site = '';
+// Único lugar para configurar el dominio.
+// Para el sitio público definitivo usa: 'https://plazaliberacion.com'
+const site = 'https://plazaliberacion.com';
 
+// Modo "server" para poder desplegar endpoints dinámicos en Cloudflare
+// Workers. Las páginas estáticas individuales (HTML) se prerenderizan
+// mediante `export const prerender = true` para preservar SEO y reducir
+// el consumo de CPU en el borde.
 export default defineConfig({
-  site: site || undefined,
+  site,
   output: 'server',
   adapter: cloudflare(),
-  integrations: site ? [sitemap()] : [],
+  integrations: [sitemap()],
   vite: { plugins: [tailwindcss()] }
 });

@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-label="Plaza de la Liberación, Guadalajara">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f7c87a"/>
+      <stop offset="55%" stop-color="#e58a4a"/>
+      <stop offset="100%" stop-color="#7a3a23"/>
+    </linearGradient>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#b87a3a"/>
+      <stop offset="100%" stop-color="#5a3a23"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="35%" r="60%">
+      <stop offset="0%" stop-color="#ffe1a8" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#ffe1a8" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#sky)"/>
+  <rect y="500" width="1200" height="300" fill="url(#ground)"/>
+  <rect width="1200" height="800" fill="url(#glow)"/>
+
+  <!-- Teatro Degollado silhouette -->
+  <g fill="#3a2418" opacity="0.85">
+    <rect x="430" y="320" width="340" height="200"/>
+    <polygon points="430,320 600,220 770,320"/>
+    <rect x="460" y="380" width="20" height="120"/>
+    <rect x="500" y="380" width="20" height="120"/>
+    <rect x="540" y="380" width="20" height="120"/>
+    <rect x="580" y="380" width="20" height="120"/>
+    <rect x="620" y="380" width="20" height="120"/>
+    <rect x="660" y="380" width="20" height="120"/>
+    <rect x="700" y="380" width="20" height="120"/>
+    <rect x="740" y="380" width="20" height="120"/>
+    <rect x="430" y="500" width="340" height="20"/>
+  </g>
+
+  <!-- Hidalgo monument -->
+  <g fill="#241410">
+    <rect x="585" y="500" width="30" height="80"/>
+    <rect x="565" y="580" width="70" height="20"/>
+    <circle cx="600" cy="480" r="22"/>
+  </g>
+
+  <!-- Plaza lamp posts -->
+  <g fill="#241410" opacity="0.85">
+    <rect x="200" y="450" width="6" height="150"/>
+    <rect x="900" y="450" width="6" height="150"/>
+    <circle cx="203" cy="450" r="14"/>
+    <circle cx="903" cy="450" r="14"/>
+  </g>
+
+  <!-- Decorative tiles -->
+  <g fill="#3a2a1a" opacity="0.45">
+    <rect x="100" y="600" width="1000" height="6"/>
+    <rect x="100" y="650" width="1000" height="6"/>
+    <rect x="100" y="700" width="1000" height="6"/>
+  </g>
+
+  <text x="60" y="80" font-family="Georgia, serif" font-size="34" font-weight="700" fill="#fff8e6" opacity="0.85">Plaza de la Liberación</text>
+  <text x="60" y="115" font-family="Georgia, serif" font-size="18" fill="#fff8e6" opacity="0.7">Guadalajara · Jalisco · México</text>
+</svg>

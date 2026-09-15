@@ -1,0 +1,55 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import AboutSection from '../components/AboutSection.astro';
+import ReviewsBlock from '../components/ReviewsBlock.astro';
+import LocationSection from '../components/LocationSection.astro';
+import LandmarksSection from '../components/LandmarksSection.astro';
+import HistorySection from '../components/HistorySection.astro';
+import SeasonalStrategySection from '../components/SeasonalStrategySection.astro';
+import ItinerarySection from '../components/ItinerarySection.astro';
+import AudienceRoutesSection from '../components/AudienceRoutesSection.astro';
+import PracticalInfoSection from '../components/PracticalInfoSection.astro';
+import WeatherBlock from '../components/WeatherBlock.astro';
+import VisitorEducationSection from '../components/VisitorEducationSection.astro';
+import FAQSection from '../components/FAQSection.astro';
+import SourcesSection from '../components/SourcesSection.astro';
+import Footer from '../components/Footer.astro';
+import { ATTRACTION } from '../lib/seo';
+
+// Prerender del HTML en build para mantener SEO y velocidad.
+// Solo el endpoint /api/weather se ejecuta en Cloudflare Workers.
+export const prerender = true;
+
+const pageTitle = `${ATTRACTION.fullName} (${ATTRACTION.city}) - Visitor Guide & Location`;
+const pageDescription = `Discover ${ATTRACTION.fullName}, the iconic landmark in ${ATTRACTION.city}, ${ATTRACTION.state}, ${ATTRACTION.country}. View location map, opening details, nearby ${ATTRACTION.nearby.landmark1.name}, and travel tips.`;
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  canonicalPath="/"
+  ogImage={ATTRACTION.heroImage}
+>
+  <Header />
+
+  <main id="main">
+    <Hero />
+    <WeatherBlock />
+    <AboutSection />
+    <ReviewsBlock />
+    <LocationSection />
+    <LandmarksSection />
+    <HistorySection />
+    <SeasonalStrategySection />
+    <ItinerarySection />
+    <AudienceRoutesSection />
+    <PracticalInfoSection />
+    <VisitorEducationSection />
+    <FAQSection />
+    <SourcesSection />
+  </main>
+
+  <Footer />
+</BaseLayout>

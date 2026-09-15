@@ -1,0 +1,234 @@
+---
+import '../styles/global.css';
+import { SITE_CONFIG, ATTRACTION, FAQS, SYNC_SOURCES } from '../lib/seo';
+
+interface Props {
+  title: string;
+  description: string;
+  canonicalPath?: string;
+  ogImage?: string;
+}
+
+const { title, description, canonicalPath = '/', ogImage = ATTRACTION.heroImage } = Astro.props;
+const canonicalUrl = `${SITE_CONFIG.origin}${canonicalPath}`;
+const ogImageUrl = ogImage.startsWith('http') ? ogImage : `${SITE_CONFIG.origin}${ogImage}`;
+
+// JSON-LD: TouristAttraction (anclaje de entidad geográfica).
+const attractionJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'TouristAttraction',
+  '@id': `${SITE_CONFIG.origin}/#attraction`,
+  name: ATTRACTION.fullName,
+  alternateName: [...ATTRACTION.alternateName],
+  description: `Comprehensive visitor guide to ${ATTRACTION.fullName} in ${ATTRACTION.city}, ${ATTRACTION.state}, ${ATTRACTION.country}.`,
+  url: SITE_CONFIG.origin,
+  image: [`${SITE_CONFIG.origin}${ATTRACTION.heroImage}`],
+  isAccessibleForFree: true,
+  publicAccess: true,
+  touristType: ['Cultural tourism', 'Historical tourism', 'Urban tourism'],
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: ATTRACTION.streetAddress,
+    addressLocality: ATTRACTION.city,
+    addressRegion: ATTRACTION.state,
+    postalCode: ATTRACTION.postalCode,
+    addressCountry: ATTRACTION.countryCode
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: ATTRACTION.latitude,
+    longitude: ATTRACTION.longitude
+  },
+  hasMap: ATTRACTION.mapsShareUrl,
+  sameAs: [ATTRACTION.mapsShareUrl, ATTRACTION.govtTourismUrl],
+  containedInPlace: {
+    '@type': 'City',
+    name: ATTRACTION.city,
+    containedInPlace: {
+      '@type': 'AdministrativeArea',
+      name: ATTRACTION.state,
+      containedInPlace: {
+        '@type': 'Country',
+        name: ATTRACTION.country
+      }
+    }
+  }
+};
+
+// JSON-LD: FAQPage (preguntas frecuentes para featured snippets).
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: FAQS.map((faq) => ({
+    '@type': 'Question',
+    name: faq.name,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: faq.acceptedAnswer
+    }
+  }))
+};
+
+// JSON-LD: WebSite (descripción general del dominio).
+const websiteJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${SITE_CONFIG.origin}/#website`,
+  url: SITE_CONFIG.origin,
+  name: SITE_CONFIG.name,
+  inLanguage: SITE_CONFIG.language,
+  publisher: {
+    '@type': 'Organization',
+    name: SITE_CONFIG.name,
+    url: SITE_CONFIG.origin
+  }
+};
+
+// JSON-LD: WebPage (referencia a la TouristAttraction enlazada por @id).
+const webPageJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  '@id': `${canonicalUrl}#webpage`,
+  url: canonicalUrl,
+  name: title,
+  description,
+  inLanguage: SITE_CONFIG.language,
+  isPartOf: { '@id': `${SITE_CONFIG.origin}/#website` },
+  about: { '@id': `${SITE_CONFIG.origin}/#attraction` },
+  primaryImageOfPage: {
+    '@type': 'ImageObject',
+    contentUrl: ogImageUrl
+  }
+};
+
+// JSON-LD: BreadcrumbList (jerarquía geográfica / entidad).
+const breadcrumbJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: ATTRACTION.fullName, item: canonicalUrl },
+    { '@type': 'ListItem', position: 2, name: ATTRACTION.city, item: canonicalUrl },
+    { '@type': 'ListItem', position: 3, name: ATTRACTION.state, item: canonicalUrl },
+    { '@type': 'ListItem', position: 4, name: ATTRACTION.country, item: canonicalUrl }
+  ]
+};
+---
+
+<!doctype html>
+<html lang={SITE_CONFIG.language}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- ===== TDK ===== -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content={`Plaza de la Liberación, Plaza Liberación, Guadalajara, Jalisco, México, 旅游胜地, ubicación, mapa, ${ATTRACTION.fullName}`} />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="author" content={SITE_CONFIG.name} />
+    <meta name="geo.region" content={`MX-${ATTRACTION.countryCode === 'MX' ? 'JAL' : ''}`} />
+    <meta name="geo.placename" content={`${ATTRACTION.fullName}, ${ATTRACTION.city}`} />
+    <meta name="geo.position" content={`${ATTRACTION.latitude};${ATTRACTION.longitude}`} />
+    <meta name="ICBM" content={`${ATTRACTION.latitude}, ${ATTRACTION.longitude}`} />
+    <meta name="theme-color" content={SITE_CONFIG.themeColor} />
+    <meta name="color-scheme" content="light" />
+
+    <!-- ===== Canonical ===== -->
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- ===== Favicon & PWA ===== -->
+    <link rel="icon" type="image/svg+xml" href="/icons/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16.png" />
+    <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="/icons/favicon-180.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Plaza Liberación" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="Plaza Liberación" />
+    <meta name="format-detection" content="telephone=no" />
+
+    <!-- ===== Open Graph ===== -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE_CONFIG.name} />
+    <meta property="og:title" content={`${ATTRACTION.fullName} — Guía turística de ${ATTRACTION.city}`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:secure_url" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="800" />
+    <meta property="og:image:alt" content={`${ATTRACTION.fullName} en ${ATTRACTION.city}, ${ATTRACTION.country}`} />
+    <meta property="og:locale" content={SITE_CONFIG.ogLocale} />
+    <meta property="og:locale:alternate" content="es_ES" />
+    <meta property="og:locale:alternate" content="en_US" />
+
+    <!-- ===== Twitter / X ===== -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={`${ATTRACTION.fullName} — ${ATTRACTION.city}`} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+    <meta name="twitter:image:alt" content={`${ATTRACTION.fullName} en ${ATTRACTION.city}`} />
+
+    <!-- ===== hreflang básico ===== -->
+    <link rel="alternate" hreflang="es-MX" href={canonicalUrl} />
+    <link rel="alternate" hreflang="x-default" href={canonicalUrl} />
+
+    <!-- ===== JSON-LD: TouristAttraction ===== -->
+    <script type="application/ld+json" set:html={JSON.stringify(attractionJsonLd)} is:inline></script>
+
+    <!-- ===== JSON-LD: WebSite ===== -->
+    <script type="application/ld+json" set:html={JSON.stringify(websiteJsonLd)} is:inline></script>
+
+    <!-- ===== JSON-LD: WebPage ===== -->
+    <script type="application/ld+json" set:html={JSON.stringify(webPageJsonLd)} is:inline></script>
+
+    <!-- ===== JSON-LD: BreadcrumbList ===== -->
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} is:inline></script>
+
+    <!-- ===== JSON-LD: FAQPage ===== -->
+    <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} is:inline></script>
+
+    <slot name="head" />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Saltar al contenido principal</a>
+
+    <slot />
+
+    <!-- Service Worker registration (PWA) -->
+    <script is:inline>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker
+            .register('/sw.js', { scope: '/' })
+            .catch((err) => console.warn('SW registration failed:', err));
+        });
+      }
+    </script>
+
+    <!-- Sincronización declarada al cargar el documento -->
+    <script is:inline>
+      // Sin tracking. Sin cookies. Sin almacenamiento de datos personales.
+      // Solo expone los datos de sincronización declarados en JSON-LD.
+      window.__plazaLiberacionSync = {
+        reviews: {
+          ratingValue: 4.7,
+          reviewCount: 14441,
+          lastSync: '2026-09',
+          source: 'Google Maps'
+        }
+      };
+    </script>
+
+    <style is:global>
+      {`
+        /* Variable runtime para SECTUR y links */
+        :root { color-scheme: light; }
+      `}
+    </style>
+  </body>
+</html>

@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-label="Palacio de Gobierno de Jalisco">
+  <defs>
+    <linearGradient id="sky5" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffe082"/>
+      <stop offset="100%" stop-color="#ffcc80"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#sky5)"/>
+  <!-- Building body -->
+  <rect x="150" y="280" width="900" height="460" fill="#fff3e0"/>
+  <!-- Windows -->
+  <g fill="#5d4037">
+    <rect x="200" y="340" width="60" height="100"/>
+    <rect x="290" y="340" width="60" height="100"/>
+    <rect x="380" y="340" width="60" height="100"/>
+    <rect x="470" y="340" width="60" height="100"/>
+    <rect x="560" y="340" width="60" height="100"/>
+    <rect x="650" y="340" width="60" height="100"/>
+    <rect x="740" y="340" width="60" height="100"/>
+    <rect x="830" y="340" width="60" height="100"/>
+    <rect x="920" y="340" width="60" height="100"/>
+    <rect x="200" y="470" width="60" height="100"/>
+    <rect x="290" y="470" width="60" height="100"/>
+    <rect x="380" y="470" width="60" height="100"/>
+    <rect x="470" y="470" width="60" height="100"/>
+    <rect x="560" y="470" width="60" height="100"/>
+    <rect x="650" y="470" width="60" height="100"/>
+    <rect x="740" y="470" width="60" height="100"/>
+    <rect x="830" y="470" width="60" height="100"/>
+    <rect x="920" y="470" width="60" height="100"/>
+  </g>
+  <!-- Cornice -->
+  <rect x="150" y="280" width="900" height="20" fill="#8d6e63"/>
+  <!-- Steps -->
+  <rect x="130" y="740" width="940" height="20" fill="#bcaaa4"/>
+  <rect x="110" y="760" width="980" height="20" fill="#a1887f"/>
+  <text x="60" y="60" font-family="Georgia, serif" font-size="28" font-weight="700" fill="#3e2723">Palacio de Gobierno de Jalisco</text>
+</svg>

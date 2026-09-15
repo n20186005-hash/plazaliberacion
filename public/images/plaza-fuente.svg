@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-label="Fuente oeste de la Plaza de la Liberación">
+  <defs>
+    <linearGradient id="sky2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#cfd8dc"/>
+      <stop offset="100%" stop-color="#90a4ae"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#sky2)"/>
+  <!-- Fountain basin -->
+  <ellipse cx="600" cy="600" rx="360" ry="60" fill="#5d4037"/>
+  <ellipse cx="600" cy="595" rx="320" ry="48" fill="#7c6055"/>
+  <ellipse cx="600" cy="590" rx="280" ry="40" fill="#3e2723"/>
+  <!-- Fountain center pillar -->
+  <rect x="580" y="380" width="40" height="220" fill="#4e342e"/>
+  <circle cx="600" cy="380" r="40" fill="#3e2723"/>
+  <circle cx="600" cy="380" r="20" fill="#90caf9"/>
+  <!-- Water jets -->
+  <g stroke="#bbdefb" stroke-width="4" fill="none" opacity="0.8">
+    <path d="M600 380 Q540 320 470 360"/>
+    <path d="M600 380 Q660 320 730 360"/>
+    <path d="M600 380 Q600 280 600 250"/>
+  </g>
+  <!-- Trees -->
+  <g fill="#2e7d32" opacity="0.8">
+    <circle cx="150" cy="350" r="90"/>
+    <circle cx="1050" cy="350" r="90"/>
+    <rect x="148" y="350" width="6" height="200" fill="#3e2723"/>
+    <rect x="1048" y="350" width="6" height="200" fill="#3e2723"/>
+  </g>
+  <text x="60" y="80" font-family="Georgia, serif" font-size="28" font-weight="700" fill="#263238">Fuente oeste · Plaza Liberación</text>
+</svg>
