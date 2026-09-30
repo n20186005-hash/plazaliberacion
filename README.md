@@ -8,7 +8,7 @@ Sitio monolingüe (es-MX), una sola página, diseñado específicamente para Pla
 
 ## Stack
 
-- Astro 7.3.2 (output `static`)
+- Astro 7.3.2 (output `server` vía `@astrojs/cloudflare`)
 - Tailwind CSS 4.3.3 vía `@tailwindcss/vite` 4.3.3
 - TypeScript 6.0.3 (dentro del rango ^5 || ^6 soportado por `@astrojs/check` 0.9.10)
 - `@astrojs/cloudflare` 14.3.1 (adapter para Cloudflare Pages/Workers)
@@ -34,16 +34,16 @@ pnpm build
   - `BreadcrumbList` con la jerarquía Plaza de la Liberación → Guadalajara → Jalisco → México.
   - `FAQPage` con 7 preguntas frecuentes para featured snippets.
 - **HTML semántico**: H1 único, jerarquía H2 con ciudad, lugares cercanos e historia.
-- **Anchor linking**: cada texto clave (全称, 简称, 城市, 省, 国家) está enlazado semánticamente en el primer párrafo y en las secciones About / Location / Landmarks / History.
+- **Anchor linking**: cada texto clave (nombre completo, nombre corto, ciudad, estado, país) está enlazado semánticamente en el primer párrafo y en las secciones About / Location / Landmarks / History.
 - **Mapa**: iframe de Google Maps con `referrerpolicy="strict-origin-when-cross-origin"` y enlace directo a `maps.app.goo.gl`.
 - **Outbound authority links**: SECTURJAL, Ayuntamiento de Guadalajara.
 
 ## Reseñas de Google Maps (cumplimiento de TOS)
 
-- La calificación agregada (4.7/5) y el número de reseñas (14,441) se muestran sólo como **resumen numérico** en la UI.
+- La calificación agregada (4.7/5) y el número de reseñas (14,440) se muestran sólo como **resumen numérico** en la UI.
 - El **texto** de las reseñas individuales **NO** se reproduce ni se inyecta en JSON-LD (esto infringiría los TOS de Google Maps).
-- Cada mención de las reseñas declara explícitamente: **"同步自 Google 地图用户评价，同步时间 2026 年 9 月；版权归原作者与 Google 地图所有"**, con un enlace directo al listado oficial en Google Maps.
-- La última sincronización declarada es **2026 年 9 月**.
+- Cada mención de las reseñas declara explícitamente: **"Sincronizado desde Google Maps el septiembre de 2026; derechos de autor pertenecen a los autores originales y a Google Maps"**, con un enlace directo al listado oficial en Google Maps.
+- La última sincronización declarada es **septiembre de 2026**.
 
 ## PWA
 
@@ -53,7 +53,7 @@ pnpm build
 
 ## Fotografías
 
-Las fotografías son SVG vectoriales originales que sirven como placeholders. Antes del lanzamiento público se recomienda sustituirlas por imágenes reales de Plaza de la Liberación obtenidas de Wikimedia Commons. **本网站所展示的所有图片产权及版权均归原摄影者所有.** Consulta `IMAGE-CREDITS.md` para autoría/licencia.
+Las fotografías son SVG vectoriales originales que sirven como placeholders. Antes del lanzamiento público se recomienda sustituirlas por imágenes reales de Plaza de la Liberación obtenidas de Wikimedia Commons. **Todas las imágenes mostradas en este sitio pertenecen a sus respectivos autores.** Consulta `IMAGE-CREDITS.md` para autoría/licencia.
 
 ## Variables de la entidad
 

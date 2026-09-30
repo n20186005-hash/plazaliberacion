@@ -31,18 +31,18 @@ export const ATTRACTION = {
   countryCode: 'MX',
   postalCode: '44100',
   streetAddress: 'C. Pedro Loza 27A, Zona Centro',
-  latitude: 20.6736,
-  longitude: -103.3442,
-  category: '旅游胜地',
+  latitude: 20.6766,
+  longitude: -103.3468,
+  category: 'Atracción turística',
   mapsShareUrl: 'https://maps.app.goo.gl/hcyXC4r12ZbDyAXy7',
   mapsEmbedSrc:
     'https://www.google.com/maps?q=Plaza+de+la+Liberaci%C3%B3n,+Guadalajara,+Jalisco,+M%C3%A9xico&hl=es&z=17&output=embed',
   mapsDirectionsUrl:
     'https://www.google.com/maps/dir/?api=1&destination=Plaza+de+la+Liberaci%C3%B3n+Guadalajara',
   ratingValue: 4.7,
-  reviewCount: 14441,
+  reviewCount: 14440,
   reviewsLastSyncISO: '2026-09-15',
-  reviewsLastSyncLabel: '2026 年 9 月',
+  reviewsLastSyncLabel: 'septiembre de 2026',
   heroImage: '/images/plaza-hero.jpg',
   nearby: {
     landmark1: {

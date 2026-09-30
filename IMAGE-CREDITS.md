@@ -1,6 +1,6 @@
 # Créditos de imágenes
 
-**本网站所展示的所有图片产权及版权均归原摄影者所有.** Todos los derechos de las fotografías exhibidas en este sitio pertenecen a sus autores originales. La reutilización debe realizarse conforme a la licencia declarada por cada fotógrafo.
+**Todas las imágenes mostradas en este sitio pertenecen a sus respectivos autores.** Todos los derechos de las fotografías exhibidas en este sitio pertenecen a sus autores originales. La reutilización debe realizarse conforme a la licencia declarada por cada fotógrafo.
 
 ## Imágenes vectoriales por defecto (incluidas en `public/images/`)
 

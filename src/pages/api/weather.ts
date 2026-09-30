@@ -186,7 +186,7 @@ export const GET: APIRoute = async ({ request }) => {
     temperatureC: roundNumber(c.temperature_2m),
     apparentTemperatureC: roundNumber(c.apparent_temperature),
     humidityPct: typeof c.relative_humidity_2m === 'number' ? c.relative_humidity_2m : null,
-    windKmh: typeof c.wind_speed_10m === 'number' ? roundNumber(c.wind_speed_10m / 10.6 * 10) / 10 : null,
+    windKmh: typeof c.wind_speed_10m === 'number' ? roundNumber(c.wind_speed_10m) : null,
     windDirDeg: c.wind_direction_10m ?? null,
     precipitationMm: roundNumber(c.precipitation ?? 0),
     isDay: c.is_day === 1,
@@ -206,7 +206,7 @@ export const GET: APIRoute = async ({ request }) => {
       precipProbPct: d.precipitation_probability_max?.[i] ?? 0,
       precipMm: roundNumber(d.precipitation_sum?.[i] ?? 0) ?? 0,
       windMaxKmh: typeof d.wind_speed_10m_max?.[i] === 'number'
-        ? roundNumber(d.wind_speed_10m_max![i] / 10.6 * 10) / 10
+        ? roundNumber(d.wind_speed_10m_max![i])
         : 0,
       uvMax: roundNumber(d.uv_index_max?.[i] ?? 0) ?? 0,
       sunrise: d.sunrise?.[i] ?? null,
