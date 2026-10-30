@@ -8,7 +8,7 @@
 export const SITE_CONFIG = {
   domain: 'plazaliberacion.com',
   origin: 'https://plazaliberacion.com',
-  name: 'Plaza de la Liberación — Visitor Guide',
+  name: 'Plaza de la Liberación — Guía de visita',
   locale: 'es_MX',
   language: 'es-MX',
   ogLocale: 'es_MX',
@@ -31,19 +31,19 @@ export const ATTRACTION = {
   countryCode: 'MX',
   postalCode: '44100',
   streetAddress: 'C. Pedro Loza 27A, Zona Centro',
-  latitude: 20.6766,
-  longitude: -103.3468,
+  latitude: 20.677015,
+  longitude: -103.3457694,
   category: 'Atracción turística',
   mapsShareUrl: 'https://maps.app.goo.gl/hcyXC4r12ZbDyAXy7',
   mapsEmbedSrc:
-    'https://www.google.com/maps?q=Plaza+de+la+Liberaci%C3%B3n,+Guadalajara,+Jalisco,+M%C3%A9xico&hl=es&z=17&output=embed',
+    'https://www.google.com/maps?q=20.677015,-103.3457694&hl=es&z=17&output=embed',
   mapsDirectionsUrl:
-    'https://www.google.com/maps/dir/?api=1&destination=Plaza+de+la+Liberaci%C3%B3n+Guadalajara',
+    'https://www.google.com/maps/dir/?api=1&destination=20.677015,-103.3457694',
   ratingValue: 4.7,
-  reviewCount: 14440,
-  reviewsLastSyncISO: '2026-09-15',
-  reviewsLastSyncLabel: 'septiembre de 2026',
-  heroImage: '/images/plaza-hero.jpg',
+  reviewCount: 14449,
+  reviewsLastSyncISO: '2026-10-29',
+  reviewsLastSyncLabel: '29 de octubre de 2026',
+  heroImage: '/images/plaza-illustration.svg',
   nearby: {
     landmark1: {
       name: 'Teatro Degollado',
@@ -63,91 +63,36 @@ export const ATTRACTION = {
 
 export const FAQS = [
   {
-    name: '¿Dónde se ubica Plaza de la Liberación?',
-    acceptedAnswer:
-      'Plaza de la Liberación se ubica en C. Pedro Loza 27A, Zona Centro, C.P. 44100, Guadalajara, Jalisco, México, en pleno corazón histórico de la ciudad.'
+    "name": "¿Dónde está Plaza de la Liberación?",
+    "acceptedAnswer": "Está en el centro histórico de Guadalajara, entre Catedral y Teatro Degollado. Maps lista C. Pedro Loza 27A como referencia; no confirmamos ese número como entrada exacta. Verifica el punto de llegada y los accesos abiertos."
   },
   {
-    name: '¿La entrada a Plaza de la Liberación es gratuita?',
-    acceptedAnswer:
-      'Sí. Plaza de la Liberación es un espacio público de acceso libre y gratuito durante todo el año; no se requiere boleto para visitarla.'
+    "name": "¿Es la misma que Plaza de Armas?",
+    "acceptedAnswer": "No. Son espacios distintos de la Cruz de Plazas. La fuente municipal fecha la terminación de Plaza de la Liberación en 1953; no la describe como la plaza colonial renombrada."
   },
   {
-    name: '¿Cuál es la calificación de Plaza de la Liberación en Google?',
-    acceptedAnswer:
-      'Según Google Maps, Plaza de la Liberación mantiene una calificación promedio de 4.7 sobre 5 con más de 14,000 reseñas de visitantes.'
+    "name": "¿Qué significa su nombre?",
+    "acceptedAnswer": "Turismo Guadalajara relaciona el monumento de Miguel Hidalgo con el decreto de abolición de la esclavitud. También recoge los nombres Dos Copas y Tres Poderes."
   },
   {
-    name: '¿Cómo llegar a Plaza de la Liberación?',
-    acceptedAnswer:
-      'Se llega fácilmente caminando desde el centro histórico de Guadalajara, a pocos pasos del Teatro Degollado y la Catedral. El sitio es accesible mediante transporte público y cuenta con estacionamientos cercanos.'
+    "name": "¿Abre 24 horas?",
+    "acceptedAnswer": "Maps mostraba 24 horas el 29 de octubre de 2026. Es un dato de terceros, no una garantía de acceso a todas las zonas, fuentes, servicios o eventos. Consulta avisos y restricciones locales."
   },
   {
-    name: '¿Qué se puede ver cerca de Plaza de la Liberación?',
-    acceptedAnswer:
-      'A pocos metros encontrarás el Teatro Degollado, el Palacio de Gobierno de Jalisco, la Catedral de Guadalajara, la Plaza de Armas y el Paseo Alcalde.'
+    "name": "¿Se paga entrada?",
+    "acceptedAnswer": "La fuente municipal describe una plaza pública; no se verificó una tarifa general vigente ni la de actividades. Confirma cualquier cobro con el organizador. Recintos, estacionamiento y transporte tienen condiciones propias."
   },
   {
-    name: '¿Cuál es la mejor hora para visitar Plaza de la Liberación?',
-    acceptedAnswer:
-      'Las primeras horas de la mañana y el atardecer ofrecen la mejor luz para fotografías; los fines de semana suele haber ambiente festivo con música en vivo.'
+    "name": "¿Está abierto el estacionamiento subterráneo?",
+    "acceptedAnswer": "CoST-Jalisco documenta una obra del estacionamiento Tres Poderes, actualizada el 21 de octubre de 2026. Una ficha de obra no confirma horario de operación, tarifa, cupo ni entrada abierta hoy; consulta al operador antes de llegar."
   },
   {
-    name: '¿Por qué se llama Plaza de la Liberación?',
-    acceptedAnswer:
-      'El nombre conmemora la abolición de la esclavitud en México decretada por Miguel Hidalgo en 1810; en su centro se alza la estatua del prócer de la Independencia.'
+    "name": "¿Cuál es la calificación en Maps?",
+    "acceptedAnswer": "La consulta del 29 de octubre de 2026 mostraba 4.7/5 de 14,449 reseñas de terceros en Google Maps. No son reseñas recopiladas por esta guía ni una actualización automática."
   },
   {
-    name: '¿Es apta la plaza para personas con movilidad reducida?',
-    acceptedAnswer:
-      'El recorrido Plaza–Palacio–Catedral se hace por superficies regulares y mayormente planas, aptas para silla de ruedas. Hay bancos cada 50 – 100 metros.'
-  },
-  {
-    name: '¿Hay baños públicos cerca?',
-    acceptedAnswer:
-      'Sí, existen módulos de sanitarios públicos en el centro histórico (en su mayoría de pago) y sanitarios gratuitos en museos y edificios oficiales cercanos.'
-  },
-  {
-    name: '¿Cuándo es la mejor temporada para visitar?',
-    acceptedAnswer:
-      'El otoño (septiembre a noviembre) suele ofrecer el mejor equilibrio entre temperatura y lluvia. El invierno (diciembre a febrero) es temporada seca y con temperaturas frescas por la noche.'
-  },
-  {
-    name: '¿Puedo llevar a mi familia con niños pequeños?',
-    acceptedAnswer:
-      'Sí. Es un espacio abierto con bancos y fuentes a la vista. Se recomienda evitar las horas de mayor calor y llevar protector solar, agua y un snack ligero.'
-  },
-  {
-    name: '¿Es segura la visita por la noche?',
-    acceptedAnswer:
-      'La zona está iluminada y cuenta con presencia policial regular. Como en cualquier centro urbano, conviene mantener precaución con objetos personales y evitar zonas poco transitadas.'
+    "name": "¿Hay una ruta accesible garantizada?",
+    "acceptedAnswer": "No hemos verificado una ruta completa sin escalones ni el estado actual de rampas, bancos o baños. Consulta cada tramo y recinto antes de salir; ajusta el paseo a tu movilidad."
   }
 ] as const;
-
-export const SYNC_SOURCES = [
-  {
-    label: 'Google Maps — Plaza de la Liberación',
-    url: 'https://maps.app.goo.gl/hcyXC4r12ZbDyAXy7',
-    type: 'rating-reviews'
-  },
-  {
-    label: 'Wikimedia Commons — fotografías',
-    url: 'https://commons.wikimedia.org/wiki/Category:Plaza_de_la_Liberaci%C3%B3n_(Guadalajara)',
-    type: 'images'
-  },
-  {
-    label: 'SECTURJAL — Secretaría de Turismo de Jalisco',
-    url: 'https://secturjal.jalisco.gob.mx/',
-    type: 'official-tourism'
-  },
-  {
-    label: 'NOAA — climatología histórica',
-    url: 'https://www.noaa.gov/',
-    type: 'climate-normal'
-  },
-  {
-    label: 'Ayuntamiento de Guadalajara',
-    url: 'https://www.guadalajara.gob.mx/',
-    type: 'official-government'
-  }
-] as const;
+export const SYNC_SOURCES = [] as const;

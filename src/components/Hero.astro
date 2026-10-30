@@ -15,11 +15,7 @@ import { ATTRACTION } from '../lib/seo';
         </h1>
 
         <p class="mt-5 text-lg text-[var(--color-ink-soft)] max-w-2xl">
-          Bienvenido a <strong>{ATTRACTION.fullName}</strong>, conocida popularmente como
-          <strong>{ATTRACTION.shortName}</strong>. Ubicada en el corazón de
-          <strong>{ATTRACTION.city}</strong>, <strong>{ATTRACTION.state}</strong>,
-          <strong>{ATTRACTION.country}</strong>, esta plaza es el principal punto de encuentro
-          para quienes exploran el centro histórico de Guadalajara.
+          Bienvenido a <strong>{ATTRACTION.fullName}</strong>, conocida popularmente como{' '}<strong>{ATTRACTION.shortName}</strong>. Ubicada en el corazón de{' '}<strong>{ATTRACTION.city}</strong>, <strong>{ATTRACTION.state}</strong>,{' '}<strong>{ATTRACTION.country}</strong>, esta plaza es un punto de referencia para quienes exploran el centro histórico de Guadalajara.
         </p>
 
         <p class="mt-4 text-base text-[var(--color-ink-soft)] max-w-2xl">
@@ -34,11 +30,11 @@ import { ATTRACTION } from '../lib/seo';
             </svg>
           </a>
           <a class="btn-secondary" href="#opiniones">
-            Ver opiniones verificadas
+            Ver referencia de Maps
           </a>
         </div>
 
-        <dl class="mt-8 grid grid-cols-3 gap-4 max-w-xl">
+        <dl class="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-xl">
           <div class="surface-card-soft p-4">
             <dt class="text-xs uppercase tracking-wider text-[var(--color-ink-soft)]">Calificación</dt>
             <dd class="mt-1 font-serif font-bold text-2xl">{ATTRACTION.ratingValue}<span class="text-base text-[var(--color-ink-soft)]">/5</span></dd>
@@ -49,12 +45,12 @@ import { ATTRACTION } from '../lib/seo';
           </div>
           <div class="surface-card-soft p-4">
             <dt class="text-xs uppercase tracking-wider text-[var(--color-ink-soft)]">Entrada</dt>
-            <dd class="mt-1 font-serif font-bold text-2xl">Libre</dd>
+            <dd class="mt-1 font-serif font-bold text-2xl">Consultar avisos</dd>
           </div>
         </dl>
 
         <p class="mt-4 text-xs text-[var(--color-ink-soft)] max-w-xl">
-          Calificación y número de reseñas sincronizados desde Google Maps · {ATTRACTION.reviewsLastSyncLabel} ·
+          Referencia de terceros consultada en Google Maps; no recogida por esta guía · {ATTRACTION.reviewsLastSyncLabel} ·
           <a href={ATTRACTION.mapsShareUrl} target="_blank" rel="noopener noreferrer">
             Ver todas las reseñas en Google Maps ↗
           </a>
@@ -65,7 +61,7 @@ import { ATTRACTION } from '../lib/seo';
         <figure class="surface-card overflow-hidden">
           <img
             src={ATTRACTION.heroImage}
-            alt={`${ATTRACTION.fullName} - Vista principal en ${ATTRACTION.city}, ${ATTRACTION.country}`}
+            alt="Composición geométrica original; no es fotografía ni plano de la plaza"
             width="1200"
             height="800"
             loading="eager"
@@ -75,7 +71,7 @@ import { ATTRACTION } from '../lib/seo';
           <figcaption class="px-4 py-3 text-xs text-[var(--color-ink-soft)] border-t border-[var(--color-border)]">
             {ATTRACTION.fullName}, {ATTRACTION.city}, {ATTRACTION.country}.
             <span class="block mt-1 opacity-80">
-              Todas las imágenes mostradas en este sitio pertenecen a sus respectivos autores.
+              Ilustración geométrica original de esta guía, CC0. No representa edificios, esculturas ni instalaciones reales.
             </span>
           </figcaption>
         </figure>
@@ -83,28 +79,4 @@ import { ATTRACTION } from '../lib/seo';
     </div>
   </div>
 
-  <!-- Breadcrumb -->
-  <nav aria-label="Jerarquía geográfica" class="border-t border-[var(--color-border)] bg-[var(--color-surface-alt)]">
-    <ol class="container-narrow py-3 flex flex-wrap items-center gap-2 text-xs text-[var(--color-ink-soft)]" itemscope itemtype="https://schema.org/BreadcrumbList">
-      <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-        <a itemprop="item" href="/" class="no-underline text-[var(--color-ink)]"><span itemprop="name">{ATTRACTION.fullName}</span></a>
-        <meta itemprop="position" content="1" />
-      </li>
-      <li aria-hidden="true">→</li>
-      <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-        <span itemprop="name">{ATTRACTION.city}</span>
-        <meta itemprop="position" content="2" />
-      </li>
-      <li aria-hidden="true">→</li>
-      <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-        <span itemprop="name">{ATTRACTION.state}</span>
-        <meta itemprop="position" content="3" />
-      </li>
-      <li aria-hidden="true">→</li>
-      <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-        <span itemprop="name">{ATTRACTION.country}</span>
-        <meta itemprop="position" content="4" />
-      </li>
-    </ol>
-  </nav>
 </section>

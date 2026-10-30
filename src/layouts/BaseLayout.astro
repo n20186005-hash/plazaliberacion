@@ -1,15 +1,16 @@
 ---
 import '../styles/global.css';
-import { SITE_CONFIG, ATTRACTION, FAQS, SYNC_SOURCES } from '../lib/seo';
+import { SITE_CONFIG, ATTRACTION, FAQS } from '../lib/seo';
 
 interface Props {
   title: string;
   description: string;
   canonicalPath?: string;
   ogImage?: string;
+  robots?: string;
 }
 
-const { title, description, canonicalPath = '/', ogImage = ATTRACTION.heroImage } = Astro.props;
+const { title, description, canonicalPath = '/', ogImage = ATTRACTION.heroImage, robots = 'index,follow' } = Astro.props;
 const canonicalUrl = `${SITE_CONFIG.origin}${canonicalPath}`;
 const ogImageUrl = ogImage.startsWith('http') ? ogImage : `${SITE_CONFIG.origin}${ogImage}`;
 
@@ -20,15 +21,12 @@ const attractionJsonLd = {
   '@id': `${SITE_CONFIG.origin}/#attraction`,
   name: ATTRACTION.fullName,
   alternateName: [...ATTRACTION.alternateName],
-  description: `Comprehensive visitor guide to ${ATTRACTION.fullName} in ${ATTRACTION.city}, ${ATTRACTION.state}, ${ATTRACTION.country}.`,
+  description: `Guía independiente de ${ATTRACTION.fullName} en ${ATTRACTION.city}, ${ATTRACTION.state}.`,
   url: SITE_CONFIG.origin,
   image: [`${SITE_CONFIG.origin}${ATTRACTION.heroImage}`],
-  isAccessibleForFree: true,
-  publicAccess: true,
   touristType: ['Cultural tourism', 'Historical tourism', 'Urban tourism'],
   address: {
     '@type': 'PostalAddress',
-    streetAddress: ATTRACTION.streetAddress,
     addressLocality: ATTRACTION.city,
     addressRegion: ATTRACTION.state,
     postalCode: ATTRACTION.postalCode,
@@ -40,7 +38,7 @@ const attractionJsonLd = {
     longitude: ATTRACTION.longitude
   },
   hasMap: ATTRACTION.mapsShareUrl,
-  sameAs: [ATTRACTION.mapsShareUrl, ATTRACTION.govtTourismUrl],
+  sameAs: [ATTRACTION.mapsShareUrl],
   containedInPlace: {
     '@type': 'City',
     name: ATTRACTION.city,
@@ -101,17 +99,6 @@ const webPageJsonLd = {
   }
 };
 
-// JSON-LD: BreadcrumbList (jerarquía geográfica / entidad).
-const breadcrumbJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: [
-    { '@type': 'ListItem', position: 1, name: ATTRACTION.fullName, item: canonicalUrl },
-    { '@type': 'ListItem', position: 2, name: ATTRACTION.city, item: canonicalUrl },
-    { '@type': 'ListItem', position: 3, name: ATTRACTION.state, item: canonicalUrl },
-    { '@type': 'ListItem', position: 4, name: ATTRACTION.country, item: canonicalUrl }
-  ]
-};
 ---
 
 <!doctype html>
@@ -125,7 +112,7 @@ const breadcrumbJsonLd = {
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="keywords" content={`Plaza de la Liberación, Plaza Liberación, Guadalajara, Jalisco, México, atracción turística, ubicación, mapa, ${ATTRACTION.fullName}`} />
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="robots" content={robots} />
     <meta name="author" content={SITE_CONFIG.name} />
     <meta name="geo.region" content={`MX-${ATTRACTION.countryCode === 'MX' ? 'JAL' : ''}`} />
     <meta name="geo.placename" content={`${ATTRACTION.fullName}, ${ATTRACTION.city}`} />
@@ -160,24 +147,22 @@ const breadcrumbJsonLd = {
     <meta property="og:image:secure_url" content={ogImageUrl} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="800" />
-    <meta property="og:image:alt" content={`${ATTRACTION.fullName} en ${ATTRACTION.city}, ${ATTRACTION.country}`} />
+    <meta property="og:image:alt" content="Composición geométrica original; no fotografía ni plano de la plaza" />
     <meta property="og:locale" content={SITE_CONFIG.ogLocale} />
-    <meta property="og:locale:alternate" content="es_ES" />
-    <meta property="og:locale:alternate" content="en_US" />
 
     <!-- ===== Twitter / X ===== -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={`${ATTRACTION.fullName} — ${ATTRACTION.city}`} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageUrl} />
-    <meta name="twitter:image:alt" content={`${ATTRACTION.fullName} en ${ATTRACTION.city}`} />
+    <meta name="twitter:image:alt" content="Composición geométrica original; no fotografía ni plano de la plaza" />
 
     <!-- ===== hreflang básico ===== -->
     <link rel="alternate" hreflang="es-MX" href={canonicalUrl} />
     <link rel="alternate" hreflang="x-default" href={canonicalUrl} />
 
     <!-- ===== JSON-LD: TouristAttraction ===== -->
-    <script type="application/ld+json" set:html={JSON.stringify(attractionJsonLd)} is:inline></script>
+    {!robots.includes('noindex') && <script type="application/ld+json" set:html={JSON.stringify(attractionJsonLd)} is:inline></script>}
 
     <!-- ===== JSON-LD: WebSite ===== -->
     <script type="application/ld+json" set:html={JSON.stringify(websiteJsonLd)} is:inline></script>
@@ -185,11 +170,9 @@ const breadcrumbJsonLd = {
     <!-- ===== JSON-LD: WebPage ===== -->
     <script type="application/ld+json" set:html={JSON.stringify(webPageJsonLd)} is:inline></script>
 
-    <!-- ===== JSON-LD: BreadcrumbList ===== -->
-    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} is:inline></script>
 
     <!-- ===== JSON-LD: FAQPage ===== -->
-    <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} is:inline></script>
+    {!robots.includes('noindex') && <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} is:inline></script>}
 
     <slot name="head" />
   </head>
@@ -210,19 +193,6 @@ const breadcrumbJsonLd = {
       }
     </script>
 
-    <!-- Sincronización declarada al cargar el documento -->
-    <script is:inline>
-      // Sin tracking. Sin cookies. Sin almacenamiento de datos personales.
-      // Solo expone los datos de sincronización declarados en JSON-LD.
-      window.__plazaLiberacionSync = {
-        reviews: {
-          ratingValue: 4.7,
-          reviewCount: 14440,
-          lastSync: '2026-09',
-          source: 'Google Maps'
-        }
-      };
-    </script>
 
     <style is:global>
       /* Variable runtime para SECTUR y links */

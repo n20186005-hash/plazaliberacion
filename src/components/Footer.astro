@@ -9,7 +9,7 @@ const year = new Date().getFullYear();
     <div>
       <p class="font-serif font-bold text-lg">Plaza Liberación</p>
       <p class="mt-2 text-[var(--color-border)] opacity-90">
-        Guía oficial para visitantes de {ATTRACTION.fullName} en {ATTRACTION.city}, {ATTRACTION.state}, {ATTRACTION.country}.
+        Guía independiente y sin ánimo de lucro de información turística y divulgación para visitantes de {ATTRACTION.fullName} en {ATTRACTION.city}, {ATTRACTION.state}, {ATTRACTION.country}.
       </p>
       <p class="mt-3 text-xs opacity-70">Dominio: {SITE_CONFIG.domain}</p>
     </div>
@@ -49,9 +49,9 @@ const year = new Date().getFullYear();
     <div>
       <p class="font-semibold">Avisos</p>
       <ul class="mt-2 space-y-1 opacity-90 text-xs leading-relaxed">
-        <li>Solo se muestra la calificación y el número de reseñas; no reproducimos el texto de las reseñas para cumplir los TOS de Google Maps.</li>
-        <li>Todas las imágenes mostradas en este sitio pertenecen a sus respectivos autores y están protegidas por derechos de autor.</li>
-        <li>Este sitio no utiliza rastreo por cookies ni analítica invasiva.</li>
+        <li>Solo se muestra la calificación y el número de reseñas; no reproducimos el texto de las reseñas con atribución y fecha de consulta.</li>
+        <li>Ilustración geométrica original CC0; no es foto ni representación de instalaciones o arte de la plaza.</li>
+        <li>Sin analítica propia configurada. Maps y Cloudflare pueden tratar datos de conexión; consulta el aviso de privacidad.</li>
       </ul>
     </div>
   </div>
@@ -59,7 +59,7 @@ const year = new Date().getFullYear();
   <div class="container-narrow mt-10 pt-6 border-t border-white/10 flex flex-wrap items-center justify-between gap-4 text-xs opacity-75">
     <p>© {year} {SITE_CONFIG.name}. Hecho con Astro · Cloudflare.</p>
     <p>
-      v1.0.0 · Última sincronización de reseñas: {ATTRACTION.reviewsLastSyncLabel}
+      v1.0.0 · Consulta de reseñas: {ATTRACTION.reviewsLastSyncLabel}
     </p>
   </div>
-</footer>
+<p class="container-narrow mt-4 text-xs"><a href="#privacidad">Privacidad y condiciones</a></p></footer>

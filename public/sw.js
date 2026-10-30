@@ -1,54 +1,65 @@
-/* Plaza Liberación — Service Worker
- * Estrategia simple de cache-first para activos estáticos.
- * Sin almacenamiento de datos personales. Sin tracking.
- */
-const CACHE_VERSION = 'plaza-liberacion-v1';
-const PRECACHE_URLS = [
-  '/',
-  '/manifest.webmanifest',
-  '/icons/icon-192.svg',
-  '/icons/icon-512.svg',
-  '/icons/apple-touch-icon.svg',
-  '/icons/favicon.svg',
-  '/images/plaza-hero.svg',
-  '/images/plaza-fuente.svg',
-  '/images/plaza-hidalgo.svg',
-  '/images/plaza-degollado.svg',
-  '/images/palacio-gobierno.svg'
-];
+/* Plaza de la Liberación independent guide — offline service worker.
+   Strategy: precache the app shell, network-first for navigations with an
+   offline fallback, stale-while-revalidate for same-origin static assets.
+   Cross-origin requests (Google Analytics, Google Maps) always go to the
+   network so they keep working normally. */
+
+const VERSION = 'plaza-guide-2026-10-29';
+
+const PRECACHE = ['/', '/icons/favicon.svg', '/images/plaza-illustration.svg'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_VERSION).then((cache) => cache.addAll(PRECACHE_URLS)).then(() => self.skipWaiting())
+    caches
+      .open(VERSION)
+      .then((cache) => cache.addAll(PRECACHE))
+      .then(() => self.skipWaiting())
   );
 });
 
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(keys.filter((k) => k !== CACHE_VERSION).map((k) => caches.delete(k)))
-    ).then(() => self.clients.claim())
+    caches
+      .keys()
+      .then((keys) => Promise.all(keys.filter((key) => key !== VERSION).map((key) => caches.delete(key))))
+      .then(() => self.clients.claim())
   );
 });
 
 self.addEventListener('fetch', (event) => {
   const request = event.request;
   if (request.method !== 'GET') return;
-  const url = new URL(request.url);
-  if (url.origin !== self.location.origin) return;
 
-  event.respondWith(
-    caches.match(request).then((cached) => {
-      if (cached) return cached;
-      return fetch(request)
+  const url = new URL(request.url);
+  if (url.origin !== self.location.origin || url.pathname.startsWith('/api/')) return;
+
+  if (request.mode === 'navigate') {
+    event.respondWith(
+      fetch(request)
         .then((response) => {
-          if (response && response.status === 200 && response.type === 'basic') {
-            const clone = response.clone();
-            caches.open(CACHE_VERSION).then((cache) => cache.put(request, clone));
+          if (['/'].includes(url.pathname) && response.status === 200) {
+            const copy = response.clone();
+            caches.open(VERSION).then((cache) => cache.put(url.pathname, copy));
           }
           return response;
         })
-        .catch(() => caches.match('/'));
+        .catch(async () => (['/'].includes(url.pathname) && await caches.match(url.pathname)) || new Response('Page unavailable offline',{status:503,headers:{'X-Robots-Tag':'noindex'}}))
+    );
+    return;
+  }
+
+  event.respondWith(
+    caches.match(request).then((cached) => {
+      const network = fetch(request)
+        .then((response) => {
+          if (response && response.status === 200 && response.type === 'basic') {
+            const copy = response.clone();
+            caches.open(VERSION).then((cache) => cache.put(request, copy));
+          }
+          return response;
+        })
+        .catch(() => cached);
+      return cached || network;
     })
   );
 });

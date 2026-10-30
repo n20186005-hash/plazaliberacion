@@ -15,6 +15,6 @@ export default defineConfig({
   site,
   output: 'server',
   adapter: cloudflare(),
-  integrations: [sitemap()],
+  integrations: [sitemap({filter: (page) => !/\/404(?:\.html|\/)?$/.test(new URL(page).pathname)})],
   vite: { plugins: [tailwindcss()] }
 });

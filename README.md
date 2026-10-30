@@ -1,60 +1,11 @@
-# Plaza de la Liberación — sitio Astro
+# Plaza de la Liberación, Guadalajara
 
-Sitio monolingüe (es-MX), una sola página, diseñado específicamente para Plaza de la Liberación en Guadalajara, Jalisco, México.
+Independent nonprofit tourism and public-education guide in Spanish, with a fixed-place weather forecast. No government or venue affiliation. Sources, dated Maps reference and operational limits are visible on the page.
 
-## Dominio
+## Preserved native architecture
 
-**`plazaliberacion.com`** — configurado en `astro.config.mjs` como `site: 'https://plazaliberacion.com'`. Es el único lugar donde debe modificarse; el resto del sitio lo lee desde `src/lib/seo.ts`.
+Astro server output with its existing Cloudflare adapter and a prerendered homepage. `/api/weather` remains a dynamic Worker endpoint; do not replace this architecture with a static fallback. A thin wrapper around the native Astro adapter handles HTTP/www canonical redirects and noindex errors before static asset resolution; the dynamic API still runs through that adapter. Existing PWA caches static guide assets, bypasses API requests and avoids home-page fallbacks for unknown URLs.
 
-## Stack
+Exact package versions, frozen lock, Node 22.16.0 and pnpm 10.11.1 remain unchanged; Wrangler 4.131.2. Existing build allowlist unchanged. Install with `pnpm install --frozen-lockfile`, run `pnpm run check` and `pnpm run build`. The adapter emits `dist/server/wrangler.json`; use the repository's normal Wrangler deploy discovery, with dry-run for local preparation. A dry-run is not deployment. Project name is plazaliberacion; no new domain bindings.
 
-- Astro 7.3.2 (output `server` vía `@astrojs/cloudflare`)
-- Tailwind CSS 4.3.3 vía `@tailwindcss/vite` 4.3.3
-- TypeScript 6.0.3 (dentro del rango ^5 || ^6 soportado por `@astrojs/check` 0.9.10)
-- `@astrojs/cloudflare` 14.3.1 (adapter para Cloudflare Pages/Workers)
-- `@astrojs/sitemap` 3.7.4
-- PWA: `public/manifest.webmanifest` + `public/sw.js` (cache-first para recursos estáticos)
-- pnpm 10.11.1 / Node 22.16.0 LTS
-
-## Comandos
-
-```bash
-corepack enable
-CI=1 corepack pnpm install --frozen-lockfile
-pnpm check
-pnpm build
-```
-
-## SEO y datos estructurados
-
-- **Title / Description / Canonical / OG / Twitter / hreflang** inyectados desde `src/layouts/BaseLayout.astro`.
-- **JSON-LD** inyectado en `<head>`:
-  - `TouristAttraction` con `@id`, `image`, `isAccessibleForFree`, `geo`, `address`, `hasMap`, `sameAs`, `containedInPlace`.
-  - `WebSite` y `WebPage` enlazados por `@id`.
-  - `BreadcrumbList` con la jerarquía Plaza de la Liberación → Guadalajara → Jalisco → México.
-  - `FAQPage` con 7 preguntas frecuentes para featured snippets.
-- **HTML semántico**: H1 único, jerarquía H2 con ciudad, lugares cercanos e historia.
-- **Anchor linking**: cada texto clave (nombre completo, nombre corto, ciudad, estado, país) está enlazado semánticamente en el primer párrafo y en las secciones About / Location / Landmarks / History.
-- **Mapa**: iframe de Google Maps con `referrerpolicy="strict-origin-when-cross-origin"` y enlace directo a `maps.app.goo.gl`.
-- **Outbound authority links**: SECTURJAL, Ayuntamiento de Guadalajara.
-
-## Reseñas de Google Maps (cumplimiento de TOS)
-
-- La calificación agregada (4.7/5) y el número de reseñas (14,440) se muestran sólo como **resumen numérico** en la UI.
-- El **texto** de las reseñas individuales **NO** se reproduce ni se inyecta en JSON-LD (esto infringiría los TOS de Google Maps).
-- Cada mención de las reseñas declara explícitamente: **"Sincronizado desde Google Maps el septiembre de 2026; derechos de autor pertenecen a los autores originales y a Google Maps"**, con un enlace directo al listado oficial en Google Maps.
-- La última sincronización declarada es **septiembre de 2026**.
-
-## PWA
-
-- `public/manifest.webmanifest` declara el sitio como aplicación instalable.
-- `public/sw.js` registra una estrategia cache-first sin tracking ni almacenamiento personal.
-- El registro se inyecta inline al final del `<body>` (`BaseLayout.astro`).
-
-## Fotografías
-
-Las fotografías son SVG vectoriales originales que sirven como placeholders. Antes del lanzamiento público se recomienda sustituirlas por imágenes reales de Plaza de la Liberación obtenidas de Wikimedia Commons. **Todas las imágenes mostradas en este sitio pertenecen a sus respectivos autores.** Consulta `IMAGE-CREDITS.md` para autoría/licencia.
-
-## Variables de la entidad
-
-Toda la información del sitio (nombre, dirección, coordenadas, fuentes oficiales, etc.) se centraliza en `src/lib/seo.ts`. Si necesitas actualizar un dato, cambia ahí y todos los componentes, JSON-LD y meta-tags se regenerarán automáticamente.
+Image provenance is in IMAGE-CREDITS.md. Weather data: Open-Meteo, CC BY 4.0, summarized for the guide with visible credit. Private performance exports and run-specific validation evidence remain outside this public repository.

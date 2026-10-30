@@ -1,10 +1,4 @@
-# Security & HSTS headers for plazaliberacion.com
-# NOTE: Domain-level 301 redirects (http -> https, www -> apex) are NOT
-# supported by Cloudflare Workers static assets. Configure them in the
-# Cloudflare dashboard instead:
-#   - SSL/TLS -> Edge Certificates -> "Always Use HTTPS" = On
-#   - Rules -> Redirect Rules: www.plazaliberacion.com/* -> https://plazaliberacion.com/*
-
+# Security headers. The native adapter wrapper handles canonical redirects.
 /*
   Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
   X-Content-Type-Options: nosniff

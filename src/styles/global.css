@@ -166,3 +166,5 @@ a:hover {
     transition: none;
   }
 }
+[id] {scroll-margin-top:10rem;}
+a:focus-visible,button:focus-visible,summary:focus-visible {outline:3px solid var(--color-accent);outline-offset:4px;}

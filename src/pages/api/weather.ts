@@ -8,8 +8,7 @@ export const prerender = false;
  * días para la plaza. Cache-Control público (30 min) + uso del Cache API del
  * runtime de Cloudflare Workers para deduplicar peticiones dentro del borde.
  *
- * El JSON entregado al cliente NO menciona el proveedor upstream; sólo expone
- * datos agregados pensados para visitantes. Si la consulta externa falla,
+ * Datos de Open-Meteo (CC BY 4.0); el cliente acredita proveedor y licencia. Si la consulta externa falla,
  * se devuelve un error 503 con un mensaje neutro.
  */
 const CACHE_TTL_SECONDS = 30 * 60; // 30 minutos
@@ -82,6 +81,7 @@ interface DaySummary {
 }
 
 interface CurrentSummary {
+  observedAt: string;
   temperatureC: number | null;
   apparentTemperatureC: number | null;
   humidityPct: number | null;
@@ -103,8 +103,9 @@ interface AdvicePayload {
 
 export const GET: APIRoute = async ({ request }) => {
   const url = new URL(request.url);
-  const cache = typeof caches !== 'undefined' ? caches : undefined;
-  const cacheKey = new Request(url.toString(), { method: 'GET' });
+  let cache: Cache | undefined;
+  try { if (typeof caches !== 'undefined') cache = await caches.open('plaza-weather-v1'); } catch { /* Weather remains available when cache storage is unavailable. */ }
+  const cacheKey = new Request(new URL('/api/weather', url).toString(), { method: 'GET' });
 
   if (cache) {
     try {
@@ -136,6 +137,7 @@ export const GET: APIRoute = async ({ request }) => {
   let upstreamResponse: Response;
   try {
     upstreamResponse = await fetch(upstream.toString(), {
+      signal: AbortSignal.timeout(8000),
       headers: { 'User-Agent': 'plazaliberacion.com (Cloudflare Workers)' }
     });
   } catch {
@@ -152,7 +154,7 @@ export const GET: APIRoute = async ({ request }) => {
     );
   }
 
-  const raw = (await upstreamResponse.json()) as {
+  const raw = (await upstreamResponse.json().catch(() => null)) as {
     current?: {
       time?: string;
       temperature_2m?: number;
@@ -178,7 +180,8 @@ export const GET: APIRoute = async ({ request }) => {
     };
   };
 
-  const c = raw.current ?? {};
+  if (!raw || !raw.current || typeof raw.current.temperature_2m !== 'number' || typeof raw.current.time !== 'string') return jsonResponse({error:'invalid_data',message:'No hay datos meteorológicos válidos.'},{status:502,cacheControl:'no-store'});
+  const c = raw.current;
   const code = c.weather_code ?? -1;
   const desc = describeWeather(code);
   const current: CurrentSummary = {
@@ -188,7 +191,7 @@ export const GET: APIRoute = async ({ request }) => {
     humidityPct: typeof c.relative_humidity_2m === 'number' ? c.relative_humidity_2m : null,
     windKmh: typeof c.wind_speed_10m === 'number' ? roundNumber(c.wind_speed_10m) : null,
     windDirDeg: c.wind_direction_10m ?? null,
-    precipitationMm: roundNumber(c.precipitation ?? 0),
+    precipitationMm: roundNumber(c.precipitation ?? 0) ?? 0,
     isDay: c.is_day === 1,
     label: desc.label,
     emoji: desc.emoji
@@ -206,7 +209,7 @@ export const GET: APIRoute = async ({ request }) => {
       precipProbPct: d.precipitation_probability_max?.[i] ?? 0,
       precipMm: roundNumber(d.precipitation_sum?.[i] ?? 0) ?? 0,
       windMaxKmh: typeof d.wind_speed_10m_max?.[i] === 'number'
-        ? roundNumber(d.wind_speed_10m_max![i])
+        ? (roundNumber(d.wind_speed_10m_max![i]) ?? 0)
         : 0,
       uvMax: roundNumber(d.uv_index_max?.[i] ?? 0) ?? 0,
       sunrise: d.sunrise?.[i] ?? null,
@@ -218,6 +221,7 @@ export const GET: APIRoute = async ({ request }) => {
   const advice = buildAdvice(current, days);
 
   const payload = {
+    attribution: { provider: 'Open-Meteo', url: 'https://open-meteo.com/', license: 'CC BY 4.0', licenseUrl: 'https://creativecommons.org/licenses/by/4.0/' },
     location: {
       name: `${ATTRACTION.fullName}, ${ATTRACTION.city}`,
       latitude: ATTRACTION.latitude,
@@ -260,7 +264,7 @@ function buildAdvice(current: CurrentSummary, days: DaySummary[]): AdvicePayload
   // ============ LLUVIA ============
   if (maxPrecipProb >= 60) {
     activities.push(
-      'Hay alta probabilidad de lluvia en los próximos días: prioriza recintos cerrados como el Teatro Degollado, la Catedral o el Palacio de Gobierno.'
+      'Hay alta probabilidad de lluvia en los próximos días: revisa opciones bajo techo, confirmando antes la apertura y condiciones de cada recinto.'
     );
     items.push('Paraguas compacto o impermeable');
     outfit.push('Calzado con suela antiderrapante; el empedrado del centro se vuelve resbaloso con lluvia.');
@@ -273,7 +277,7 @@ function buildAdvice(current: CurrentSummary, days: DaySummary[]): AdvicePayload
   if (current.precipitationMm >= 5 || anyHeavyRain) {
     items[items.indexOf('Paraguas compacto o impermeable')] =
       'Impermeable o paraguas reforzado (evita paraguas largo si hay viento)';
-    activities.push('Lluvia fuerte esperada: reprograma actividades al aire libre para la mañana del día siguiente.');
+    activities.push('Lluvia fuerte esperada: reconsidera las actividades al aire libre y consulta de nuevo el pronóstico antes de reprogramar.');
   }
 
   if (anyThunder) {
@@ -283,7 +287,7 @@ function buildAdvice(current: CurrentSummary, days: DaySummary[]): AdvicePayload
   // ============ TEMPERATURA ============
   if (todayMax != null && todayMax >= 32) {
     activities.push('Hace mucho calor: programa la visita antes de las 11:00 o después de las 17:00; evita las horas de mediodía.');
-    items.push('Botella de agua reutilizable (hay fuentes cercanas para rellenarla)');
+    items.push('Agua para el recorrido (no se han confirmado bebederos operativos)');
     outfit.push('Ropa ligera, de colores claros y telas transpirables');
   } else if (todayMax != null && todayMax >= 27) {
     items.push('Botella de agua para mantenerte hidratado');
@@ -324,7 +328,6 @@ function buildAdvice(current: CurrentSummary, days: DaySummary[]): AdvicePayload
 
   if (current.label === 'Niebla' || current.label === 'Niebla escarchante') {
     risk.push('⚠️ Neblina: la visibilidad puede reducirse; las fotografías a distancia perderán contraste.');
-    items.push('Mascarilla o bufanda ligera (la humedad se concentra en el ambiente)');
   }
 
   // ============ HUMEDAD (ciudad) ============
@@ -372,7 +375,7 @@ interface JsonResponseOptions {
 function jsonResponse(
   payload: unknown,
   options: JsonResponseOptions,
-  cache?: CacheStorage,
+  cache?: Cache,
   cacheKey?: Request
 ) {
   const body = JSON.stringify(payload);
