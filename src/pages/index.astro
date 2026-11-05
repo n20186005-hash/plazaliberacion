@@ -15,6 +15,7 @@ import WeatherBlock from '../components/WeatherBlock.astro';
 import VisitorEducationSection from '../components/VisitorEducationSection.astro';
 import FAQSection from '../components/FAQSection.astro';
 import SourcesSection from '../components/SourcesSection.astro';
+import TopicLinks from '../components/TopicLinks.astro';
 import Footer from '../components/Footer.astro';
 import { ATTRACTION } from '../lib/seo';
 
@@ -22,8 +23,8 @@ import { ATTRACTION } from '../lib/seo';
 // Solo el endpoint /api/weather se ejecuta en Cloudflare Workers.
 export const prerender = true;
 
-const pageTitle = `${ATTRACTION.fullName}, Guadalajara: historia y visita`;
-const pageDescription = 'Plaza de la Liberación en Guadalajara: historia documentada, ubicación entre Catedral y Teatro Degollado, Maps fechado y consejos para confirmar acceso y servicios.';
+const pageTitle = 'Plaza de la Liberación Guadalajara | Historia, Ubicación y Qué Ver';
+const pageDescription = 'Conoce la Plaza de la Liberación en Guadalajara: su historia, las fuentes, el monumento a Miguel Hidalgo, cómo llegar y qué visitar cerca.';
 ---
 
 <BaseLayout
@@ -36,6 +37,7 @@ const pageDescription = 'Plaza de la Liberación en Guadalajara: historia docume
 
   <main id="main">
     <Hero />
+    <TopicLinks />
     <WeatherBlock />
     <AboutSection />
     <ReviewsBlock />

@@ -2,17 +2,48 @@
 import '../styles/global.css';
 import { SITE_CONFIG, ATTRACTION, FAQS } from '../lib/seo';
 
+export interface BreadcrumbItem {
+  name: string;
+  path: string;
+}
+export interface SchemaFaq {
+  q: string;
+  a: string;
+}
+
 interface Props {
   title: string;
   description: string;
   canonicalPath?: string;
   ogImage?: string;
   robots?: string;
+  /** 'home' mantiene el esquema completo del atractivo; 'topic' usa esquema propio de guía. */
+  pageType?: 'home' | 'topic';
+  ogTitle?: string;
+  keywords?: string;
+  breadcrumbs?: readonly BreadcrumbItem[];
+  faqs?: readonly SchemaFaq[];
+  dateModified?: string;
 }
 
-const { title, description, canonicalPath = '/', ogImage = ATTRACTION.heroImage, robots = 'index,follow' } = Astro.props;
+const {
+  title,
+  description,
+  canonicalPath = '/',
+  ogImage = ATTRACTION.heroImage,
+  robots = 'index,follow',
+  pageType = 'home',
+  ogTitle,
+  keywords,
+  breadcrumbs = [],
+  faqs = [],
+  dateModified
+} = Astro.props;
+const isTopic = pageType === 'topic';
 const canonicalUrl = `${SITE_CONFIG.origin}${canonicalPath}`;
 const ogImageUrl = ogImage.startsWith('http') ? ogImage : `${SITE_CONFIG.origin}${ogImage}`;
+const resolvedOgTitle = ogTitle ?? (isTopic ? title : `${ATTRACTION.fullName} — Guía turística de ${ATTRACTION.city}`);
+const resolvedKeywords = keywords ?? `Plaza de la Liberación, Plaza Liberación, Guadalajara, Jalisco, México, atracción turística, ubicación, mapa, ${ATTRACTION.fullName}`;
 
 // JSON-LD: TouristAttraction (anclaje de entidad geográfica).
 const attractionJsonLd = {
@@ -99,6 +130,64 @@ const webPageJsonLd = {
   }
 };
 
+// Esquema exclusivo de las guías temáticas: un @graph con WebSite, WebPage,
+// BreadcrumbList y FAQPage propia. El atractivo se referencia por @id para no
+// repetir 36 veces la ficha completa ni emitir un AggregateRating de terceros.
+const breadcrumbJsonLd = {
+  '@type': 'BreadcrumbList',
+  '@id': `${canonicalUrl}#breadcrumb`,
+  itemListElement: breadcrumbs.map((crumb, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: crumb.name,
+    item: `${SITE_CONFIG.origin}${crumb.path}`
+  }))
+};
+
+const topicFaqJsonLd = {
+  '@type': 'FAQPage',
+  '@id': `${canonicalUrl}#faq`,
+  mainEntity: faqs.map((faq) => ({
+    '@type': 'Question',
+    name: faq.q,
+    acceptedAnswer: { '@type': 'Answer', text: faq.a }
+  }))
+};
+
+const topicWebPageJsonLd = {
+  '@type': 'WebPage',
+  '@id': `${canonicalUrl}#webpage`,
+  url: canonicalUrl,
+  name: title,
+  description,
+  inLanguage: SITE_CONFIG.language,
+  isPartOf: { '@id': `${SITE_CONFIG.origin}/#website` },
+  about: { '@id': `${SITE_CONFIG.origin}/#attraction` },
+  primaryImageOfPage: {
+    '@type': 'ImageObject',
+    contentUrl: ogImageUrl
+  },
+  breadcrumb: { '@id': `${canonicalUrl}#breadcrumb` },
+  ...(dateModified ? { dateModified } : {})
+};
+
+const topicGraphJsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    { '@type': 'WebSite', '@id': websiteJsonLd['@id'], url: websiteJsonLd.url, name: websiteJsonLd.name, inLanguage: websiteJsonLd.inLanguage, publisher: websiteJsonLd.publisher },
+    {
+      '@type': 'TouristAttraction',
+      '@id': `${SITE_CONFIG.origin}/#attraction`,
+      name: ATTRACTION.fullName,
+      url: SITE_CONFIG.origin,
+      hasMap: ATTRACTION.mapsShareUrl
+    },
+    topicWebPageJsonLd,
+    breadcrumbJsonLd,
+    ...(faqs.length ? [topicFaqJsonLd] : [])
+  ]
+};
+
 ---
 
 <!doctype html>
@@ -111,7 +200,7 @@ const webPageJsonLd = {
     <!-- ===== TDK ===== -->
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="keywords" content={`Plaza de la Liberación, Plaza Liberación, Guadalajara, Jalisco, México, atracción turística, ubicación, mapa, ${ATTRACTION.fullName}`} />
+    <meta name="keywords" content={resolvedKeywords} />
     <meta name="robots" content={robots} />
     <meta name="author" content={SITE_CONFIG.name} />
     <meta name="geo.region" content={`MX-${ATTRACTION.countryCode === 'MX' ? 'JAL' : ''}`} />
@@ -138,9 +227,9 @@ const webPageJsonLd = {
     <meta name="format-detection" content="telephone=no" />
 
     <!-- ===== Open Graph ===== -->
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={isTopic ? 'article' : 'website'} />
     <meta property="og:site_name" content={SITE_CONFIG.name} />
-    <meta property="og:title" content={`${ATTRACTION.fullName} — Guía turística de ${ATTRACTION.city}`} />
+    <meta property="og:title" content={resolvedOgTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:image" content={ogImageUrl} />
@@ -152,7 +241,7 @@ const webPageJsonLd = {
 
     <!-- ===== Twitter / X ===== -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={`${ATTRACTION.fullName} — ${ATTRACTION.city}`} />
+    <meta name="twitter:title" content={resolvedOgTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageUrl} />
     <meta name="twitter:image:alt" content="Composición geométrica original; no fotografía ni plano de la plaza" />
@@ -161,18 +250,14 @@ const webPageJsonLd = {
     <link rel="alternate" hreflang="es-MX" href={canonicalUrl} />
     <link rel="alternate" hreflang="x-default" href={canonicalUrl} />
 
-    <!-- ===== JSON-LD: TouristAttraction ===== -->
-    {!robots.includes('noindex') && <script type="application/ld+json" set:html={JSON.stringify(attractionJsonLd)} is:inline></script>}
+    <!-- ===== JSON-LD: esquema propio de cada tipo de página ===== -->
+    {isTopic && <script type="application/ld+json" set:html={JSON.stringify(topicGraphJsonLd)} is:inline></script>}
 
-    <!-- ===== JSON-LD: WebSite ===== -->
-    <script type="application/ld+json" set:html={JSON.stringify(websiteJsonLd)} is:inline></script>
-
-    <!-- ===== JSON-LD: WebPage ===== -->
-    <script type="application/ld+json" set:html={JSON.stringify(webPageJsonLd)} is:inline></script>
-
-
-    <!-- ===== JSON-LD: FAQPage ===== -->
-    {!robots.includes('noindex') && <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} is:inline></script>}
+    <!-- TouristAttraction: ficha completa sólo en la portada -->
+    {!isTopic && !robots.includes('noindex') && <script type="application/ld+json" set:html={JSON.stringify(attractionJsonLd)} is:inline></script>}
+    {!isTopic && <script type="application/ld+json" set:html={JSON.stringify(websiteJsonLd)} is:inline></script>}
+    {!isTopic && <script type="application/ld+json" set:html={JSON.stringify(webPageJsonLd)} is:inline></script>}
+    {!isTopic && !robots.includes('noindex') && <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} is:inline></script>}
 
     <slot name="head" />
   </head>

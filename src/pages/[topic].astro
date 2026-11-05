@@ -1,0 +1,22 @@
+---
+import TopicPage from '../components/TopicPage.astro';
+import { TOPICS, type Topic } from '../data/topics';
+
+// Las 36 guías se prerrenderizan como HTML estático (mismo mecanismo que la portada).
+// Sólo /api/weather sigue siendo un endpoint dinámico en Cloudflare Workers.
+export const prerender = true;
+
+export function getStaticPaths() {
+  return TOPICS.map((topic: Topic) => ({
+    params: { topic: topic.slug },
+    props: { topic }
+  }));
+}
+
+interface Props {
+  topic: Topic;
+}
+const { topic } = Astro.props;
+---
+
+<TopicPage topic={topic} />

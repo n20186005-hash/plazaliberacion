@@ -23,7 +23,11 @@ export const ATTRACTION = {
   alternateName: [
     'Plaza Liberación',
     'Guadalajara Plaza de la Liberación',
-    'Plaza Liberación Guadalajara'
+    'Plaza Liberación Guadalajara',
+    'Plaza Liberación GDL',
+    'Plaza de la Liberación en Guadalajara',
+    'Plaza de los Tres Poderes',
+    'Plaza de las Dos Copas'
   ],
   city: 'Guadalajara',
   state: 'Jalisco',
@@ -31,6 +35,10 @@ export const ATTRACTION = {
   countryCode: 'MX',
   postalCode: '44100',
   streetAddress: 'C. Pedro Loza 27A, Zona Centro',
+  // Plus Code y dirección de Maps se usan como referencia de ubicación,
+  // no como entrada única ni como domicilio de la plaza completa.
+  plusCodeShort: 'MMG3+RM',
+  plusCode: 'MMG3+RM Guadalajara, Jal., México',
   latitude: 20.677015,
   longitude: -103.3457694,
   category: 'Atracción turística',
@@ -40,9 +48,9 @@ export const ATTRACTION = {
   mapsDirectionsUrl:
     'https://www.google.com/maps/dir/?api=1&destination=20.677015,-103.3457694',
   ratingValue: 4.7,
-  reviewCount: 14449,
-  reviewsLastSyncISO: '2026-10-29',
-  reviewsLastSyncLabel: '29 de octubre de 2026',
+  reviewCount: 14451,
+  reviewsLastSyncISO: '2026-11-04',
+  reviewsLastSyncLabel: '4 de noviembre de 2026',
   heroImage: '/images/plaza-illustration.svg',
   nearby: {
     landmark1: {
@@ -88,7 +96,7 @@ export const FAQS = [
   },
   {
     "name": "¿Cuál es la calificación en Maps?",
-    "acceptedAnswer": "La consulta del 29 de octubre de 2026 mostraba 4.7/5 de 14,449 reseñas de terceros en Google Maps. No son reseñas recopiladas por esta guía ni una actualización automática."
+    "acceptedAnswer": "La consulta del 4 de noviembre de 2026 mostraba 4.7/5 de 14,451 reseñas de terceros en Google Maps. No son reseñas recopiladas por esta guía ni una actualización automática."
   },
   {
     "name": "¿Hay una ruta accesible garantizada?",
@@ -96,3 +104,69 @@ export const FAQS = [
   }
 ] as const;
 export const SYNC_SOURCES = [] as const;
+
+/**
+ * Registro de fuentes consultadas para las guías temáticas.
+ * Cada ficha distingue el hecho documentado de la recomendación editorial.
+ * Las fichas de obra, directorios y mapas pueden cambiar: se citan con su
+ * fecha de consulta y nunca se presentan como tarifa, horario o apertura vigente.
+ */
+export const OFFICIAL_SOURCES = {
+  turismoPlaza: {
+    name: 'Turismo Guadalajara · Plaza Liberación',
+    url: 'https://tequiero.guadalajara.gob.mx/lugares/plaza-liberacion',
+    note: 'Identidad del espacio, nombres históricos, proyecto urbano y terminación.'
+  },
+  rutaCentro: {
+    name: 'Turismo Guadalajara · Ruta del Centro Histórico',
+    url: 'https://tequiero.guadalajara.gob.mx/rutas/ruta-de-centro-historico',
+    note: 'Relación entre la plaza, la Catedral, el Teatro Degollado y otros espacios del centro.'
+  },
+  gacetaPlazas: {
+    name: 'Gobierno de Guadalajara · Plazas y fuentes (Gaceta, marzo de 2021)',
+    url: 'https://transparencia.guadalajara.gob.mx/sites/default/files/GacetaMarzo2021.pdf',
+    note: 'Antecedentes del espacio público, fuentes y denominaciones locales.'
+  },
+  guiaArquitectonica: {
+    name: 'Cultura Jalisco · Guía arquitectónica del Centro Histórico',
+    url: 'https://sc.jalisco.gob.mx/sites/sc.jalisco.gob.mx/files/guia_arquitectonica1.pdf',
+    note: 'Cruz de Plazas y lectura urbana del conjunto.'
+  },
+  inahTeatro: {
+    name: 'INAH · Catálogo Nacional de Monumentos Históricos Inmuebles · Teatro Degollado',
+    url: 'https://catalogonacionalmhi.inah.gob.mx/consulta_publica/detalle/26858',
+    note: 'Ficha de patrimonio del Teatro Degollado.'
+  },
+  visitJalisco: {
+    name: 'Visita Jalisco · Guadalajara',
+    url: 'https://visitjalisco.mx/regiones/guadalajara',
+    note: 'Contexto turístico del centro histórico; estaciones y rutas deben reconfirmarse.'
+  },
+  estacionamientos: {
+    name: 'Gobierno de Guadalajara · Directorio de estacionamientos municipales',
+    url: 'https://enlinea.guadalajara.gob.mx/estacionamientos/detalle.php?id=87&jumpMenu=CENTRO&pageIndex=2',
+    note: 'Directorio de referencia; tarifas, cupo y horarios requieren verificación actual.'
+  },
+  costEstacionamiento: {
+    name: 'CoST-Jalisco · Obra del estacionamiento Tres Poderes',
+    url: 'https://www.costjalisco.org.mx/project-single/5514',
+    note: 'Ficha de obra con actualización del 21/10/2026; no acredita operación ni tarifa.'
+  },
+  maps: {
+    name: 'Google Maps · Plaza de la Liberación',
+    url: 'https://maps.app.goo.gl/hcyXC4r12ZbDyAXy7',
+    note: 'Ubicación, Plus Code y calificación agregada de terceros, consultados el 04/11/2026.'
+  },
+  secturJalisco: {
+    name: 'Secretaría de Turismo de Jalisco',
+    url: 'https://secturjal.jalisco.gob.mx/',
+    note: 'Portal oficial de turismo del estado.'
+  },
+  openMeteo: {
+    name: 'Open-Meteo · Previsión meteorológica',
+    url: 'https://open-meteo.com/',
+    note: 'Datos CC BY 4.0; previsión de modelo, no observación instalada en la plaza.'
+  }
+} as const;
+
+export type SourceKey = keyof typeof OFFICIAL_SOURCES;

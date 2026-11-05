@@ -1,0 +1,246 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from './Header.astro';
+import Footer from './Footer.astro';
+import { ATTRACTION, SITE_CONFIG } from '../lib/seo';
+import {
+  topicPath,
+  topicBreadcrumbs,
+  topicSources,
+  relatedTopics,
+  groupLabel,
+  TOPICS_UPDATED,
+  TOPICS_UPDATED_ISO,
+  getTopic,
+  type Topic
+} from '../data/topics';
+
+interface Props {
+  topic: Topic;
+}
+const { topic } = Astro.props;
+
+const breadcrumbs = topicBreadcrumbs(topic);
+const sources = topicSources(topic);
+const related = relatedTopics(topic);
+const total = 36;
+
+/** Una ruta por grupo para cumplir el enlace de ruta contextual. */
+const routeByGroup: Record<string, string> = {
+  core: 'ruta-30-minutos',
+  transport: 'ruta-30-minutos',
+  history: 'ruta-una-hora',
+  nearby: 'ruta-una-hora',
+  routes: 'ruta-medio-dia',
+  practical: 'ruta-medio-dia'
+};
+let routeSlug = routeByGroup[topic.group] ?? 'ruta-30-minutos';
+if (routeSlug === topic.slug) routeSlug = 'ruta-30-minutos';
+const routeTopic = getTopic(routeSlug);
+const routeAlreadyLinked = related.some((item) => item.slug === routeSlug);
+---
+
+<BaseLayout
+  title={topic.title}
+  description={topic.description}
+  canonicalPath={topicPath(topic.slug)}
+  ogImage={ATTRACTION.heroImage}
+  pageType="topic"
+  ogTitle={topic.title}
+  keywords={topic.keywords}
+  breadcrumbs={breadcrumbs}
+  faqs={topic.faqs}
+  dateModified={TOPICS_UPDATED_ISO}
+>
+  <Header topic />
+
+  <main id="main">
+    <!-- ===== Migas de pan ===== -->
+    <nav aria-label="Ruta de navegación" class="breadcrumb-bar">
+      <ol class="container-narrow breadcrumb-list">
+        {breadcrumbs.map((crumb, index) => (
+          <li>
+            {index < breadcrumbs.length - 1 && <a href={crumb.path}>{crumb.name}</a>}
+            {index === breadcrumbs.length - 1 && <span aria-current="page">{crumb.name}</span>}
+            {index < breadcrumbs.length - 1 && <span class="breadcrumb-sep" aria-hidden="true">›</span>}
+          </li>
+        ))}
+      </ol>
+    </nav>
+
+    <!-- ===== Encabezado ===== -->
+    <section class="topic-hero">
+      <div class="container-narrow">
+        <p class="topic-eyebrow">
+          {groupLabel(topic.group)} · Guía {String(topic.num).padStart(2, '0')} de {total} · {topic.priority}
+        </p>
+        <h1>{topic.h1}</h1>
+        <p class="topic-lead">{topic.lead}</p>
+
+        <div class="topic-meta">
+          <span class="topic-pill">Revisado: {TOPICS_UPDATED}</span>
+          {topic.startPoint && <span class="topic-pill">Punto de partida: {topic.startPoint}</span>}
+          <a class="btn-secondary topic-map-btn" href={ATTRACTION.mapsDirectionsUrl} target="_blank" rel="noopener noreferrer">
+            Ver en Google Maps ↗
+          </a>
+        </div>
+
+        <p class="topic-hero-note">
+          Guía independiente y sin ánimo de lucro sobre {ATTRACTION.fullName} en {ATTRACTION.city}, {ATTRACTION.state}.
+          Confirmamos hechos documentados y señalamos lo que debe verificarse en sitio.
+        </p>
+
+        <p class="topic-back">
+          <a href="/">← Volver a la guía principal de {ATTRACTION.fullName}</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- ===== Índice de la guía ===== -->
+    <nav aria-label="Contenido de esta guía" class="topic-toc-wrap">
+      <div class="container-narrow">
+        <div class="surface-card topic-toc">
+          <p class="topic-toc-title">En esta guía</p>
+          <ol>
+            {topic.sections.map((section, index) => (
+              <li><a href={`#seccion-${index + 1}`}>{section.heading}</a></li>
+            ))}
+          </ol>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ===== Contenido ===== -->
+    <div class="container-narrow topic-body">
+      {topic.sections.map((section, index) => (
+        <section id={`seccion-${index + 1}`} class="topic-section">
+          <h2>{section.heading}</h2>
+
+          {section.paragraphs && (
+            <div class="topic-prose">
+              {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+            </div>
+          )}
+
+          {section.bullets && (
+            <ul class="topic-bullets">
+              {section.bullets.map((bullet) => <li>{bullet}</li>)}
+            </ul>
+          )}
+
+          {section.steps && (
+            <ol class="topic-steps">
+              {section.steps.map((step) => <li>{step}</li>)}
+            </ol>
+          )}
+
+          {section.note && (
+            <aside class="topic-note">
+              <strong>Verificación:</strong> {section.note}
+            </aside>
+          )}
+        </section>
+      ))}
+    </div>
+
+    <!-- ===== Ruta sugerida ===== -->
+    {routeTopic && !routeAlreadyLinked && (
+      <section class="topic-route">
+        <div class="container-narrow">
+          <div class="surface-card-soft topic-route-card">
+            <p class="topic-route-label">Ruta relacionada</p>
+            <h2 class="topic-route-title">Un plan para poner esta guía en práctica</h2>
+            <p>
+              {routeTopic.cardText} Consulta la propuesta de <a href={topicPath(routeTopic.slug)}>{routeTopic.cardTitle}</a>
+              {' '}para ordenar el recorrido desde la plaza.
+            </p>
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- ===== Guías relacionadas ===== -->
+    <section class="topic-related" aria-labelledby="relacionadas">
+      <div class="container-narrow">
+        <h2 id="relacionadas">Guías relacionadas</h2>
+        <p class="topic-section-intro">Continúa por los temas conectados con esta página.</p>
+        <div class="topic-card-grid">
+          {related.map((item) => (
+            <a class="surface-card topic-card" href={topicPath(item.slug)}>
+              <span class="topic-card-kicker">{groupLabel(item.group)} · {String(item.num).padStart(2, '0')}</span>
+              <span class="topic-card-title">{item.cardTitle}</span>
+              <span class="topic-card-text">{item.cardText}</span>
+              <span class="topic-card-arrow" aria-hidden="true">→</span>
+            </a>
+          ))}
+        </div>
+        <p class="topic-all-link"><a href="/#guias">Ver las {total} guías de {ATTRACTION.shortName} →</a></p>
+      </div>
+    </section>
+
+    <!-- ===== Preguntas frecuentes ===== -->
+    <section class="topic-faq" aria-labelledby="preguntas-guia">
+      <div class="container-narrow">
+        <h2 id="preguntas-guia">Preguntas frecuentes de esta guía</h2>
+        <div class="surface-card topic-faq-list">
+          {topic.faqs.map((faq, index) => (
+            <details class="topic-faq-item" open={index === 0}>
+              <summary><h3>{faq.q}</h3><span aria-hidden="true" class="topic-faq-plus">+</span></summary>
+              <p>{faq.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Fuentes ===== -->
+    <section class="topic-sources" aria-labelledby="fuentes-guia">
+      <div class="container-narrow">
+        <h2 id="fuentes-guia">Fuentes consultadas</h2>
+        <p class="topic-section-intro">
+          Hechos documentados y referencias institucionales. Las fichas de obra, directorios y mapas pueden cambiar;
+          no sustituyen la verificación del día de la visita.
+        </p>
+        <ul class="topic-sources-list">
+          {sources.map((source) => (
+            <li>
+              <a href={source.url} target="_blank" rel="noopener noreferrer">{source.name} ↗</a>
+              <span>{source.note}</span>
+            </li>
+          ))}
+        </ul>
+        <p class="topic-source-note">
+          La calificación de {ATTRACTION.ratingValue} y {ATTRACTION.reviewCount.toLocaleString('es-MX')} reseñas es una
+          consulta fechada de Google Maps ({ATTRACTION.reviewsLastSyncLabel}); no son reseñas de esta guía ni se usan
+          como datos estructurados de valoración.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===== Declaración editorial ===== -->
+    <section class="topic-disclaimer">
+      <div class="container-narrow">
+        <p>
+          {SITE_CONFIG.name} es una guía turística y de divulgación independiente, sin ánimo de lucro. No representa al
+          Ayuntamiento de {ATTRACTION.city}, al Gobierno de {ATTRACTION.state} ni a los recintos del entorno. No confirma
+          en tiempo real cierres, eventos, tarifas ni servicios. Contrasta la información operativa con la fuente oficial
+          y la señalización del lugar.
+        </p>
+        <a class="btn-primary" href="/">Volver a la guía principal</a>
+      </div>
+    </section>
+  </main>
+
+  <Footer topic />
+</BaseLayout>
+
+<script>
+  const items = document.querySelectorAll<HTMLDetailsElement>('.topic-faq-item');
+  items.forEach((item) => {
+    item.addEventListener('toggle', () => {
+      if (item.open) {
+        items.forEach((other) => { if (other !== item) other.open = false; });
+      }
+    });
+  });
+</script>
