@@ -51,7 +51,7 @@ export const ATTRACTION = {
   reviewCount: 14451,
   reviewsLastSyncISO: '2026-11-04',
   reviewsLastSyncLabel: '4 de noviembre de 2026',
-  heroImage: '/images/plaza-illustration.svg',
+  heroImage: '/images/plaza-hero.jpg',
   nearby: {
     landmark1: {
       name: 'Teatro Degollado',
